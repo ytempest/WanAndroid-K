@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.main.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ytempest.wanandroid.widget.VerticalTabLayout
+            android:id="@+id/group_navigation_title_list"
+            android:layout_width="97dp"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/group_navigation_content_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/common_deep_bg"
+            android:overScrollMode="never" />
+
+    </LinearLayout>
+</FrameLayout>

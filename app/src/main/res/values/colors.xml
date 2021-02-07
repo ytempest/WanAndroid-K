@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="main_color">#60AFFA</color>
+
+    <color name="common_text">#655B52</color>
+    <color name="common_bg">#F9FAFC</color>
+    <color name="common_deep_bg">#F4F4F4</color>
+    <color name="common_black_text">#4A4A4A</color>
+    <color name="common_light_gray_text">#838383</color>
+    <color name="common_gray_text">#737373</color>
+
+    <color name="gray_line">#dcdcdc</color>
+    <color name="gray_frame">#D4D4D4</color>
+
+    <color name="ic_gray_color">#C6C5C0</color>
+
+    <color name="blue_button">@color/main_color</color>
+    <color name="blue_button_press">#3397F6</color>
+    <color name="blue_button_disable">#A5D3FF</color>
+
+    <color name="brown_button">#AA796C</color>
+    <color name="brown_button_press">#A17366</color>
+    <color name="brown_button_disable">#B19E99</color>
+
+    <array name="knowledge_tabs">
+        <item>#DA8274</item>
+        <item>#78D3A8</item>
+        <item>#C295FC</item>
+        <item>#91CED5</item>
+    </array>
+
+    <color name="arch_indicator">#DA8274</color>
+</resources>

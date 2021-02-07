@@ -1,0 +1,84 @@
+buildscript {
+    ext.versions = [
+            "versionCode": 1,
+            "versionName": "1.0",
+
+            "compileSdk" : 29,
+            "minSdk"     : 19,
+            "targetSdk"  : 29,
+    ]
+
+    ext.depsVersions = [
+            "appcompat"      : '1.1.0',
+            "arch"           : '2.0.0',
+            "dagger"         : "2.17",
+            "butterknife"    : "10.0.0",
+            "retrofit"       : "2.4.0",
+            "rxjava"         : "2.0.2",
+            "okhttp"         : "3.9.0",
+            "layout_injector": "1.1",
+            "banner"         : "1.0",
+            "glide"          : "4.5.0",
+    ]
+
+    ext.testImplementationDeps = [
+            "junit": 'junit:junit:4.12',
+    ]
+
+    ext.androidTestImplementationDeps = [
+            "runner"  : 'androidx.test.ext:junit:1.1.1',
+            "espresso": 'androidx.test.espresso:espresso-core:3.1.0',
+    ]
+
+    ext.implementationDeps = [
+            "appcompat"             : "androidx.appcompat:appcompat:${depsVersions.appcompat}",
+
+            // arch
+            "runtime"               : "androidx.lifecycle:lifecycle-runtime:${depsVersions.arch}",
+            "extensions"            : "androidx.lifecycle:lifecycle-extensions:${depsVersions.arch}",
+
+            "constraint"            : 'androidx.constraintlayout:constraintlayout:1.1.3',
+            "navigation"            : 'com.ashokvarma.android:bottom-navigation-bar:2.0.0',
+
+            // dagger
+            "dagger"                : "com.google.dagger:dagger:${depsVersions.dagger}",
+            "dagger-android"        : "com.google.dagger:dagger-android:${depsVersions.dagger}",
+            "dagger-android-support": "com.google.dagger:dagger-android-support:${depsVersions.dagger}",
+
+            // butterknife
+            "butterknife"           : "com.jakewharton:butterknife:${depsVersions.butterknife}",
+
+            "gson"                  : "com.google.code.gson:gson:2.8.6",
+            "okhttp"                : "com.squareup.okhttp3:okhttp:${depsVersions.okhttp}",
+            "okhttp-interceptor"    : "com.squareup.okhttp3:logging-interceptor:${depsVersions.okhttp}",
+
+            // rxjava
+            "rxjava"                : "io.reactivex.rxjava2:rxjava:${depsVersions.rxjava}",
+            "rxandroid"             : "io.reactivex.rxjava2:rxandroid:${depsVersions.rxjava}",
+
+            // retrofit
+            "retrofit"              : "com.squareup.retrofit2:retrofit:${depsVersions.retrofit}",
+            "retrofit-rxjava"       : "com.squareup.retrofit2:adapter-rxjava2:${depsVersions.retrofit}",
+            "retrofit-gson"         : "com.squareup.retrofit2:converter-gson:${depsVersions.retrofit}",
+
+            "layout-injector"       : "com.ytempest:layoutinjector:${depsVersions.layout_injector}",
+            "greenrobot"            : "org.greenrobot:greendao:3.2.2",
+            "glide"                 : "com.github.bumptech.glide:glide:${depsVersions.glide}",
+            "banner"                : "com.ytempest:banner:${depsVersions.banner}",
+            // 用户登录用到的cookie认证
+            "persistent_cookie"     : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
+            "varietytablayout"      : 'com.ytempest:varietytablayout:1.1',
+    ]
+
+    ext.annotationProcessorDeps = [
+            "arch-compiler"       : "androidx.lifecycle:lifecycle-compiler:${depsVersions.arch}",
+            "butterknife-compiler": "com.jakewharton:butterknife-compiler:${depsVersions.butterknife}",
+
+            // dagger
+            "dagger-compiler"     : "com.google.dagger:dagger-compiler:${depsVersions.dagger}",
+            "dagger-processor"    : "com.google.dagger:dagger-android-processor:${depsVersions.dagger}",
+
+            "layout-injector"     : "com.ytempest:layoutinjector-compiler:${depsVersions.layout_injector}",
+            "glide"               : "com.github.bumptech.glide:compiler:${depsVersions.glide}",
+    ]
+}

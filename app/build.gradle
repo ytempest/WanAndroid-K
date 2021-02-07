@@ -1,0 +1,63 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        applicationId "com.ytempest.wanandroid"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("wan.jks")
+            storePassword "wanandroid"
+            keyAlias "wan"
+            keyPassword "wanandroid"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+greendao {
+    schemaVersion 1 //当前数据库版本
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    testImplementationDeps.each { k, v -> testImplementation v }
+    androidTestImplementationDeps.each { k, v -> androidTestImplementation v }
+
+    implementationDeps.each { k, v -> implementation v }
+    annotationProcessorDeps.each { k, v -> annotationProcessor v }
+
+    // tools
+    implementation(name: 'tool-v1.0-37-g8a47b58-2020-12-21_16-09', ext: 'aar')
+}

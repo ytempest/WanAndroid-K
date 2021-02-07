@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="14dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:paddingHorizontal="10dp">
+
+        <ImageView
+            android:id="@+id/iv_item_project_content_img"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="10dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/space_item_project_content_middle"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:id="@+id/space_item_project_content_middle"
+            android:layout_width="11dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_item_project_content_img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/iv_item_project_content_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_author"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_project_content_collect"
+            app:layout_constraintStart_toEndOf="@id/space_item_project_content_middle"
+            app:layout_constraintTop_toTopOf="@id/tv_item_project_content_collect"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_item_project_content_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="6dp"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/common_black_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_project_content_collect"
+            app:layout_constraintEnd_toStartOf="@id/tv_item_project_content_collect"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/iv_item_project_content_icon"
+            app:layout_constraintTop_toTopOf="@id/tv_item_project_content_collect"
+            tools:text="User" />
+
+        <TextView
+            android:id="@+id/tv_item_project_content_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:text="@string/collect"
+            android:textColor="@color/main_color"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_item_project_content_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_item_project_content_user"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_item_project_content_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textColor="@color/common_black_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_item_project_content_desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/space_item_project_content_middle"
+            app:layout_constraintTop_toBottomOf="@id/iv_item_project_content_icon"
+            tools:text="title" />
+
+        <TextView
+            android:id="@+id/tv_item_project_content_desc"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="7dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="4dp"
+            android:maxLines="4"
+            android:minLines="4"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_item_project_content_vcs_url"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/space_item_project_content_middle"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_project_content_title"
+            app:layout_constraintVertical_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_item_project_content_vcs_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="3dp"
+            android:text="@string/project_url"
+            android:textColor="@color/main_color"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_project_content_desc" />
+
+
+        <TextView
+            android:id="@+id/tv_item_project_content_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/common_gray_text"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_project_content_vcs_url"
+            app:layout_constraintStart_toEndOf="@id/space_item_project_content_middle"
+            app:layout_constraintTop_toTopOf="@id/tv_item_project_content_vcs_url"
+            tools:text="2020-11-11 22:22" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

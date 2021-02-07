@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_register_root"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#88B1A3"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".activity.register.RegisterActivity">
+
+
+    <ImageView
+        android:id="@+id/iv_register_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@null"
+        android:padding="4dp"
+        android:src="@drawable/ic_back_white" />
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:background="#90BCC9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/sp_round_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_user" />
+
+        <EditText
+            android:id="@+id/et_register_account"
+            style="@style/register_edit_text_style"
+            android:hint="@string/login_account_hint"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/sp_round_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_lock" />
+
+        <EditText
+            android:id="@+id/et_register_pwd"
+            style="@style/register_edit_text_style"
+            android:hint="@string/input_pwd"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/sp_round_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_lock" />
+
+        <EditText
+            android:id="@+id/et_register_pwd_confirm"
+            style="@style/register_edit_text_style"
+            android:hint="@string/confirm_pwd"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <com.ytempest.wanandroid.widget.ModifiableButton
+        android:id="@+id/view_register"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="@string/register"
+        android:textSize="15sp"
+        app:disable_bg="@drawable/sp_round_light_brown_disable"
+        app:disable_text_color="@android:color/white"
+        app:normal_bg="@drawable/sl_round_light_brown"
+        app:normal_text_color="@android:color/white" />
+</LinearLayout>

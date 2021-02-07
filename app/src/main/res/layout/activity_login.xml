@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    tools:context=".activity.login.LoginActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/welcome_login_wanandroid"
+        android:textColor="@color/common_black_text"
+        android:textSize="21sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_user" />
+
+        <EditText
+            android:id="@+id/et_login_account"
+            style="@style/default_edit_text_style"
+            android:hint="@string/login_account_hint"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <View style="@style/gray_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_lock" />
+
+        <EditText
+            android:id="@+id/et_login_password"
+            style="@style/default_edit_text_style"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+
+        <View
+            android:id="@+id/view_login_pwd_status"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/sl_pwd_status" />
+    </LinearLayout>
+
+    <View style="@style/gray_line" />
+
+    <com.ytempest.wanandroid.widget.ModifiableButton
+        android:id="@+id/bt_login_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/login"
+        app:disable_bg="@drawable/sp_round_light_blue_disable"
+        app:disable_text_color="@android:color/white"
+        app:normal_bg="@drawable/sl_round_light_blue"
+        app:normal_text_color="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_login_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="4dp"
+        android:text="@string/free_register"
+        android:textColor="@color/common_gray_text"
+        android:textSize="14sp" />
+</LinearLayout>

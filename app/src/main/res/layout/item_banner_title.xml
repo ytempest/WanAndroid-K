@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="34dp"
+    android:background="#51505050"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tv_banner_title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"
+        android:textColor="#434343"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:id="@+id/group_item_banner_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="14dp">
+
+        <ImageView
+            android:layout_width="4.5dp"
+            android:layout_height="4.5dp"
+            android:layout_marginHorizontal="2dp"
+            android:background="@drawable/sl_banner_indicator" />
+
+        <ImageView
+            android:layout_width="4.5dp"
+            android:layout_height="4.5dp"
+            android:layout_marginHorizontal="2dp"
+            android:background="@drawable/sl_banner_indicator" />
+
+        <ImageView
+            android:layout_width="4.5dp"
+            android:layout_height="4.5dp"
+            android:layout_marginHorizontal="2dp"
+            android:background="@drawable/sl_banner_indicator" />
+
+        <ImageView
+            android:layout_width="4.5dp"
+            android:layout_height="4.5dp"
+            android:layout_marginHorizontal="2dp"
+            android:background="@drawable/sl_banner_indicator" />
+    </LinearLayout>
+
+</LinearLayout>

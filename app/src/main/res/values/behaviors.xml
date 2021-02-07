@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ytempest_translate_behavior" translatable="false">com.ytempest.wanandroid.widget.behavior.TranslateBehavior</string>
+    <string name="ytempest_scale_behavior" translatable="false">com.ytempest.wanandroid.widget.behavior.ScaleFloatButtonBehavior</string>
+</resources>
