@@ -1,19 +1,22 @@
 package com.ytempest.wanandroid.utils;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-
 import com.ytempest.tool.util.DataUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+
 /**
  * @author heqidu
  * @since 2020/12/25
+ * 坑点：升级到AndroidX之后需要将{@link FragmentPagerAdapter}替换成{@link FragmentStatePagerAdapter}，否则
+ * 和ViewPager结合使用时会出现Fragment展示异常
  */
-public abstract class CoreFragPagerAdapter<Item> extends FragmentPagerAdapter {
+public abstract class CoreFragPagerAdapter<Item> extends FragmentStatePagerAdapter {
 
     private final List<Item> mData = new ArrayList<>();
     private final FragmentManager mFragManager;

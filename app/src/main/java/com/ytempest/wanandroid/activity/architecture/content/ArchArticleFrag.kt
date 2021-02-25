@@ -5,26 +5,24 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ytempest.layoutinjector.annotation.InjectLayout
 import com.ytempest.tool.util.LogUtils
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.base.fragment.LoaderFrag
 import com.ytempest.wanandroid.base.load.ViewType
+import com.ytempest.wanandroid.databinding.FragArchContentBinding
+import com.ytempest.wanandroid.ext.getBundle
 import com.ytempest.wanandroid.helper.ArticleDetailHelper
 import com.ytempest.wanandroid.http.bean.ArchitectureContentBean
+import com.ytempest.wanandroid.http.bean.ArticleDetailBean
 import com.ytempest.wanandroid.http.bean.KnowledgeArchitectureBean.Children
 import com.ytempest.wanandroid.utils.JSON
 import com.ytempest.wanandroid.utils.Utils
-import com.ytempest.wanandroid.ext.getBundle
-import com.ytempest.wanandroid.http.bean.ArticleDetailBean
-import kotlinx.android.synthetic.main.frag_arch_content.*
 
 /**
  * @author heqidu
  * @since 21-2-22
  */
-@InjectLayout(R.layout.frag_arch_content)
-class ArchArticleFrag : LoaderFrag<ArchArticlePresenter>(), IArchArticleView {
+class ArchArticleFrag : LoaderFrag<ArchArticlePresenter, FragArchContentBinding>(), IArchArticleView {
 
     private val TAG = "ArchArticleFrag"
 
@@ -52,7 +50,7 @@ class ArchArticleFrag : LoaderFrag<ArchArticlePresenter>(), IArchArticleView {
         }
 
         mAdapter = ArchArticleAdapter(mPresenter)
-        with(group_arch_content_list) {
+        with(binding.contentView) {
             itemAnimator = null
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
@@ -78,7 +76,7 @@ class ArchArticleFrag : LoaderFrag<ArchArticlePresenter>(), IArchArticleView {
         ArticleDetailHelper.instance.getArticleUpdateDetail().observe(viewLifecycleOwner, Observer { bean: ArticleDetailBean? ->
             if (bean == null || bean.source != ArticleDetailBean.Source.KNOWLEDGE) return@Observer
             for (data in mAdapter.srcDataList) {
-                if (data.id.toLong() == bean.articleId) {
+                if (data.id == bean.articleId) {
                     data.collect = bean.isCollected
                     mAdapter.refresh(data)
                     return@Observer

@@ -4,20 +4,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.base.fragment.LoaderFrag
 import com.ytempest.wanandroid.base.load.ViewType
-import com.ytempest.layoutinjector.annotation.InjectLayout
-import com.ytempest.wanandroid.R
+import com.ytempest.wanandroid.databinding.FragNavigationBinding
 import com.ytempest.wanandroid.http.bean.NavigationListBean
 import com.ytempest.wanandroid.widget.VerticalTabLayout
-import kotlinx.android.synthetic.main.frag_navigation.*
 
 /**
  * @author heqidu
  * @since 21-2-9
  */
-@InjectLayout(R.layout.frag_navigation)
-class NavigationFrag : LoaderFrag<NavigationPresenter>(), INavigationView {
+class NavigationFrag : LoaderFrag<NavigationPresenter, FragNavigationBinding>(), INavigationView {
 
     private lateinit var mContentAdapter: ContentAdapter
     private lateinit var mContentManager: LinearLayoutManager
@@ -25,7 +23,7 @@ class NavigationFrag : LoaderFrag<NavigationPresenter>(), INavigationView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        group_navigation_title_list.addTabActonListener(object : VerticalTabLayout.TabActonListener {
+        binding.tabView.addTabActonListener(object : VerticalTabLayout.TabActonListener {
             override fun onTabClick(view: View, position: Int) {
                 scrollContentToPosition(position, false)
             }
@@ -41,7 +39,7 @@ class NavigationFrag : LoaderFrag<NavigationPresenter>(), INavigationView {
 
         mContentManager = LinearLayoutManager(context)
         mContentAdapter = ContentAdapter(mPresenter)
-        with(group_navigation_content_list) {
+        with(binding.listView) {
             setHasFixedSize(true)
             layoutManager = mContentManager
             adapter = mContentAdapter
@@ -54,7 +52,7 @@ class NavigationFrag : LoaderFrag<NavigationPresenter>(), INavigationView {
                             isFromTab = false
                         } else {
                             val firstVisiblePosition = mContentManager.findFirstVisibleItemPosition()
-                            group_navigation_title_list.smoothScrollToPosition(firstVisiblePosition)
+                            binding.tabView.smoothScrollToPosition(firstVisiblePosition)
                         }
                     }
                 }
@@ -75,12 +73,12 @@ class NavigationFrag : LoaderFrag<NavigationPresenter>(), INavigationView {
 
     private fun scrollContentToPosition(pos: Int, isFromTab: Boolean) {
         this.isFromTab = isFromTab
-        group_navigation_content_list.smoothScrollToPosition(pos)
+        binding.listView.smoothScrollToPosition(pos)
     }
 
     override fun displayNavigationList(list: List<NavigationListBean>) {
         getLoader().hideAll()
-        group_navigation_title_list.adapter = TitleAdapter(ArrayList(list))
+        binding.tabView.adapter = TitleAdapter(ArrayList(list))
         mContentAdapter.display(list)
     }
 

@@ -10,9 +10,9 @@ import dagger.android.AndroidInjector
  * @since 21-2-7
  */
 @Subcomponent(modules = [AndroidInjectionModule::class])
-interface BaseFragmentComponent : AndroidInjector<MvpFragment<*>> {
+interface BaseFragmentComponent : AndroidInjector<MvpFragment<*, *>> {
 
     @Subcomponent.Builder
-    abstract class Builder : AndroidInjector.Builder<MvpFragment<*>>() {
+    abstract class Builder : AndroidInjector.Builder<MvpFragment<*, *>>() {
     }
 }

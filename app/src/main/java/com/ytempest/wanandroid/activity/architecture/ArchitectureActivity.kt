@@ -41,15 +41,13 @@ class ArchitectureActivity : LoaderActivity<ArchitecturePresenter, ActivityArchi
             return
         }
 
-        val tabs = ArrayList<String>()
         mBean.children?.let {
-            for (child in it) {
-                tabs.add(child.name)
-            }
+            val tabs = ArrayList<String>()
+            it.forEach { children -> tabs.add(children.name) }
             binding.indicatorView.setupWithViewPager(content_view)
             binding.indicatorView.adapter = TabAdapter(tabs)
             binding.contentView.adapter = object : CoreFragPagerAdapter<KnowledgeArchitectureBean.Children>(
-                    supportFragmentManager, mBean.children) {
+                    supportFragmentManager, it) {
                 override fun onCreateFragment(data: KnowledgeArchitectureBean.Children, pos: Int): Fragment {
                     return ArchArticleFrag.newInstance(data)
                 }
