@@ -1,14 +1,15 @@
 package com.ytempest.wanandroid.base.activity
 
 import android.view.ViewGroup
-import com.ytempest.wanandroid.base.presenter.IPresenter
+import androidx.viewbinding.ViewBinding
 import com.ytempest.wanandroid.base.load.Loader
+import com.ytempest.wanandroid.base.presenter.IPresenter
 
 /**
  * @author heqidu
  * @since 21-2-8
  */
-abstract class LoaderActivity<Presenter : IPresenter> : MvpActivity<Presenter>() {
+abstract class LoaderActivity<Presenter : IPresenter, VB : ViewBinding> : MvpActivity<Presenter, VB>() {
     private lateinit var mLoader: Loader
 
     override fun onViewCreated() {

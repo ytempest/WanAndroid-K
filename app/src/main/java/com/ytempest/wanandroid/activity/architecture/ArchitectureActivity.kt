@@ -3,11 +3,11 @@ package com.ytempest.wanandroid.activity.architecture
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
-import com.ytempest.layoutinjector.annotation.InjectLayout
 import com.ytempest.tool.helper.ActivityLauncher
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.architecture.content.ArchArticleFrag
 import com.ytempest.wanandroid.base.activity.LoaderActivity
+import com.ytempest.wanandroid.databinding.ActivityArchitectureBinding
 import com.ytempest.wanandroid.ext.getStringSafe
 import com.ytempest.wanandroid.http.bean.KnowledgeArchitectureBean
 import com.ytempest.wanandroid.utils.CoreFragPagerAdapter
@@ -18,8 +18,7 @@ import kotlinx.android.synthetic.main.activity_architecture.*
  * @author heqidu
  * @since 21-2-22
  */
-@InjectLayout(R.layout.activity_architecture)
-class ArchitectureActivity : LoaderActivity<ArchitecturePresenter>(), IArchitectureView {
+class ArchitectureActivity : LoaderActivity<ArchitecturePresenter, ActivityArchitectureBinding>(), IArchitectureView {
 
     companion object {
         private const val KEY_ARCHITECTURE_DATA = "architecture_data"
@@ -47,9 +46,9 @@ class ArchitectureActivity : LoaderActivity<ArchitecturePresenter>(), IArchitect
             for (child in it) {
                 tabs.add(child.name)
             }
-            group_arch_indicator.setupWithViewPager(group_arch_content)
-            group_arch_indicator.adapter = TabAdapter(tabs)
-            group_arch_content.adapter = object : CoreFragPagerAdapter<KnowledgeArchitectureBean.Children>(
+            binding.indicatorView.setupWithViewPager(content_view)
+            binding.indicatorView.adapter = TabAdapter(tabs)
+            binding.contentView.adapter = object : CoreFragPagerAdapter<KnowledgeArchitectureBean.Children>(
                     supportFragmentManager, mBean.children) {
                 override fun onCreateFragment(data: KnowledgeArchitectureBean.Children, pos: Int): Fragment {
                     return ArchArticleFrag.newInstance(data)

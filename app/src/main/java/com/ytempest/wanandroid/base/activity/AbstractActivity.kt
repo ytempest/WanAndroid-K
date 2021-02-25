@@ -2,17 +2,21 @@ package com.ytempest.wanandroid.base.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.ytempest.layoutinjector.LayoutInjector
+import androidx.viewbinding.ViewBinding
+import com.ytempest.wanandroid.binding.inflateViewBindingGeneric
 
 /**
  * @author heqidu
  * @since 21-2-7
  */
-abstract class AbstractActivity : AppCompatActivity() {
+abstract class AbstractActivity<VB : ViewBinding> : AppCompatActivity() {
+
+    lateinit var binding: VB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LayoutInjector.inject(this)
+        binding = inflateViewBindingGeneric(layoutInflater)
+        setContentView(binding.root)
         onViewCreated()
     }
 

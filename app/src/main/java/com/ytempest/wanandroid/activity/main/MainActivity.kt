@@ -3,18 +3,16 @@ package com.ytempest.wanandroid.activity.main
 import androidx.fragment.app.Fragment
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
-import com.ytempest.layoutinjector.annotation.InjectLayout
 import com.ytempest.tool.helper.ExpandFragHelper
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.base.activity.MvpActivity
-import kotlinx.android.synthetic.main.activity_main_content.*
+import com.ytempest.wanandroid.databinding.ActivityMainBinding
 
 /**
  * @author heqidu
  * @since 21-2-8
  */
-@InjectLayout(R.layout.activity_main)
-class MainActivity : MvpActivity<MainPresenter>(), IMainView {
+class MainActivity : MvpActivity<MainPresenter, ActivityMainBinding>(), IMainView {
 
     private val mFragHelper: ExpandFragHelper by lazy { ExpandFragHelper(supportFragmentManager, MainFragConstructor()) }
     private var mCurFrag: Fragment? = null
@@ -25,20 +23,22 @@ class MainActivity : MvpActivity<MainPresenter>(), IMainView {
     }
 
     private fun initTabs() {
-        navigationBar_main_content.clearAll()
-        navigationBar_main_content.setTabSelectedListener(object : BottomNavigationBar.SimpleOnTabSelectedListener() {
-            override fun onTabSelected(index: Int) {
-                super.onTabSelected(index)
-                val tab = MainTab.values()[index]
-                switchFrag(tab.id)
+        with(binding.content.navigationBar) {
+            clearAll()
+            setTabSelectedListener(object : BottomNavigationBar.SimpleOnTabSelectedListener() {
+                override fun onTabSelected(index: Int) {
+                    super.onTabSelected(index)
+                    val tab = MainTab.values()[index]
+                    switchFrag(tab.id)
+                }
+            })
+            for (tab in MainTab.values()) {
+                addItem(BottomNavigationItem(tab.selectIcon, tab.title)
+                        .setInactiveIconResource(tab.normalIcon))
             }
-        })
-
-        for (tab in MainTab.values()) {
-            navigationBar_main_content.addItem(BottomNavigationItem(tab.selectIcon, tab.title)
-                    .setInactiveIconResource(tab.normalIcon))
+            initialise()
         }
-        navigationBar_main_content.initialise()
+
         switchFrag(MainTab.Id.HOME)
     }
 

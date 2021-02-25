@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_article_detail"
+        android:id="@+id/toolbar"
         style="@style/AppTheme.Toolbar"
         android:background="@drawable/bg_tool_bar"
         app:navigationIcon="@drawable/ic_bar_back"
@@ -17,14 +17,14 @@
 
 
     <com.ytempest.wanandroid.widget.MaskLayout
-        android:id="@+id/view_article_detail_mask"
+        android:id="@+id/mask_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar_article_detail"
+        android:layout_below="@id/toolbar"
         app:mask_layout="@layout/layout_net_error">
 
         <WebView
-            android:id="@+id/webView_article_detail_content"
+            android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never" />
@@ -32,11 +32,11 @@
     </com.ytempest.wanandroid.widget.MaskLayout>
 
     <ProgressBar
-        android:id="@+id/view_article_detail_progress"
+        android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_below="@id/toolbar_article_detail"
+        android:layout_below="@id/toolbar"
         android:progressDrawable="@drawable/ll_article_detail_progress"
         android:visibility="invisible"
         tools:visibility="visible" />

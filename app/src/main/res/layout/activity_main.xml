@@ -11,9 +11,13 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
 
-        <include layout="@layout/activity_main_sidebar" />
+        <include
+            android:id="@+id/slider"
+            layout="@layout/activity_main_sidebar" />
     </com.google.android.material.navigation.NavigationView>
 
-    <include layout="@layout/activity_main_content" />
+    <include
+        android:id="@+id/content"
+        layout="@layout/activity_main_content" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

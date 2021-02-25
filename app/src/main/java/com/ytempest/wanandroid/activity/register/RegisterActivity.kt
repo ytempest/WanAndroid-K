@@ -4,55 +4,50 @@ import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import com.ytempest.wanandroid.http.ErrCode
-import com.ytempest.wanandroid.base.activity.MvpActivity
-import com.ytempest.layoutinjector.annotation.InjectLayout
 import com.ytempest.tool.util.RegexUtils
 import com.ytempest.wanandroid.R
+import com.ytempest.wanandroid.base.activity.MvpActivity
+import com.ytempest.wanandroid.databinding.ActivityRegisterBinding
+import com.ytempest.wanandroid.http.ErrCode
 import com.ytempest.wanandroid.http.bean.LoginBean
 import com.ytempest.wanandroid.listener.TextWatcherListener
 import com.ytempest.wanandroid.utils.SpaceInputFilter
 import com.ytempest.wanandroid.utils.StatusBarUtil
-import kotlinx.android.synthetic.main.activity_register.*
 
 /**
  * @author heqidu
  * @since 21-2-22
  */
-@InjectLayout(R.layout.activity_register)
-class RegisterActivity : MvpActivity<RegisterPresenter>(), IRegisterView {
+class RegisterActivity : MvpActivity<RegisterPresenter, ActivityRegisterBinding>(), IRegisterView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusBarUtil.immersive(this)
-        StatusBarUtil.setPaddingSmart(this, ll_register_root)
+        StatusBarUtil.setPaddingSmart(this, binding.root)
 
         val filters = arrayOf(SpaceInputFilter())
-        et_register_account.filters = filters
-        et_register_pwd.filters = filters
-        et_register_pwd_confirm.filters = filters
-
         val textWatcher = object : TextWatcherListener() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
-                if (et_register_account.length() > 0 && et_register_pwd.length() > 0 && et_register_pwd_confirm.length() > 0) {
-                    view_register.setNormalStatus()
+                if (binding.accountEt.length() > 0 && binding.pwdEt.length() > 0 && binding.pwdConfirmEt.length() > 0) {
+                    binding.registerBtn.setNormalStatus()
                 } else {
-                    view_register.setDisableStatus()
+                    binding.registerBtn.setDisableStatus()
                 }
             }
         }
 
-        et_register_account.addTextChangedListener(textWatcher)
-        et_register_pwd.addTextChangedListener(textWatcher)
-        et_register_pwd_confirm.addTextChangedListener(textWatcher)
+        arrayOf(binding.accountEt, binding.pwdEt, binding.pwdConfirmEt).forEach {
+            it.filters = filters
+            it.addTextChangedListener(textWatcher)
+        }
 
-        showSoftKeyBoard(et_register_account)
+        showSoftKeyBoard(binding.accountEt)
 
-        iv_register_back.setOnClickListener { finish() }
-        view_register.setOnClickListener {
+        binding.backView.setOnClickListener { finish() }
+        binding.registerBtn.setOnClickListener {
             val accountMinLen = resources.getInteger(R.integer.account_min_len)
-            val account: String = et_register_account.text.toString().trim()
+            val account: String = binding.accountEt.text.toString().trim()
             if (account.length < accountMinLen) {
                 showToast(getString(R.string.account_len_limit, accountMinLen))
                 return@setOnClickListener
@@ -64,8 +59,8 @@ class RegisterActivity : MvpActivity<RegisterPresenter>(), IRegisterView {
             }
 
             val pwdMinLen = resources.getInteger(R.integer.password_min_len)
-            val pwd = et_register_pwd.text.toString().trim()
-            val confirmPwd: String = et_register_pwd_confirm.text.toString().trim()
+            val pwd = binding.pwdEt.text.toString().trim()
+            val confirmPwd: String = binding.pwdConfirmEt.text.toString().trim()
             if (pwd.length < pwdMinLen || confirmPwd.length < pwdMinLen) {
                 showToast(getString(R.string.pwd_len_limit, pwdMinLen))
                 return@setOnClickListener

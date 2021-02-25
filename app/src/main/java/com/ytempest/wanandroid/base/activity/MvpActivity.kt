@@ -3,9 +3,10 @@ package com.ytempest.wanandroid.base.activity
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
+import com.ytempest.tool.util.ToastUtils
 import com.ytempest.wanandroid.base.presenter.IPresenter
 import com.ytempest.wanandroid.base.view.IView
-import com.ytempest.tool.util.ToastUtils
 import com.ytempest.wanandroid.dialog.LoadingDialog
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -17,8 +18,8 @@ import javax.inject.Inject
  * @author heqidu
  * @since 21-2-7
  */
-abstract class MvpActivity<Presenter : IPresenter> : AbstractActivity(),
-        HasSupportFragmentInjector, IView {
+abstract class MvpActivity<Presenter : IPresenter, VB : ViewBinding>
+    : AbstractActivity<VB>(), HasSupportFragmentInjector, IView {
 
     @Inject
     protected lateinit var mPresenter: Presenter;

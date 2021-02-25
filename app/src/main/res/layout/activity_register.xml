@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_register_root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +11,7 @@
 
 
     <ImageView
-        android:id="@+id/iv_register_back"
+        android:id="@+id/back_view"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="start"
@@ -44,7 +43,7 @@
             android:src="@drawable/ic_user" />
 
         <EditText
-            android:id="@+id/et_register_account"
+            android:id="@+id/account_et"
             style="@style/register_edit_text_style"
             android:hint="@string/login_account_hint"
             android:inputType="text" />
@@ -66,7 +65,7 @@
             android:src="@drawable/ic_lock" />
 
         <EditText
-            android:id="@+id/et_register_pwd"
+            android:id="@+id/pwd_et"
             style="@style/register_edit_text_style"
             android:hint="@string/input_pwd"
             android:inputType="textPassword" />
@@ -88,14 +87,14 @@
             android:src="@drawable/ic_lock" />
 
         <EditText
-            android:id="@+id/et_register_pwd_confirm"
+            android:id="@+id/pwd_confirm_et"
             style="@style/register_edit_text_style"
             android:hint="@string/confirm_pwd"
             android:inputType="textPassword" />
     </LinearLayout>
 
     <com.ytempest.wanandroid.widget.ModifiableButton
-        android:id="@+id/view_register"
+        android:id="@+id/register_btn"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginHorizontal="50dp"

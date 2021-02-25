@@ -10,12 +10,12 @@ import dagger.android.AndroidInjector
  * @since 21-2-7
  */
 @Subcomponent(modules = [AndroidInjectionModule::class])
-interface BaseActivityComponent : AndroidInjector<MvpActivity<*>> {
+interface BaseActivityComponent : AndroidInjector<MvpActivity<*, *>> {
     /**
      * 每一个继承于[MvpActivity]的Activity都会继承于这个一个子组件
      */
     @Subcomponent.Builder
-    abstract class Builder : AndroidInjector.Builder<MvpActivity<*>>() {
+    abstract class Builder : AndroidInjector.Builder<MvpActivity<*, *>>() {
 
     }
 }
