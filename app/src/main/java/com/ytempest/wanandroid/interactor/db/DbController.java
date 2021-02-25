@@ -31,7 +31,7 @@ public class DbController {
     private InstanceCache<AbsDaoWrapper> mDaoCache;
 
     private DbController() {
-        mDevOpenHelper = new DaoMaster.DevOpenHelper(WanApp.getApp(), DB_NAME, null);
+        mDevOpenHelper = new DaoMaster.DevOpenHelper(WanApp.instance, DB_NAME, null);
         DaoMaster daoMaster = new DaoMaster(mDevOpenHelper.getWritableDatabase());
         mDaoSession = daoMaster.newSession();
 

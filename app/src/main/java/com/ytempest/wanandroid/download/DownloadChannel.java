@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.core.app.NotificationManagerCompat;
 
 import com.ytempest.tool.receiver.BaseReceiver;
@@ -40,7 +41,7 @@ public class DownloadChannel {
     public DownloadChannel(Service service) {
         mService = service;
         mCompat = NotificationManagerCompat.from(service);
-        mDownloadUnit = new DownloadUnit(OkHttpManager.getInstance().getClient())
+        mDownloadUnit = new DownloadUnit(OkHttpManager.Companion.getInstance().getClient())
                 .setDownloadListener(new DownloadUnit.DownloadListener() {
 
                     private static final int TIME_NOTI_DELAY = 300;

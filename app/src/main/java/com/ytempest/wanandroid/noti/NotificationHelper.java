@@ -6,11 +6,12 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
+
+import com.ytempest.wanandroid.base.WanApp;
+import com.ytempest.tool.util.SdkUtils;
+
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationManagerCompat;
-
-import com.ytempest.tool.util.SdkUtils;
-import com.ytempest.wanandroid.base.WanApp;
 
 /**
  * @author heqidu
@@ -34,8 +35,8 @@ public class NotificationHelper {
     private final NotificationManagerCompat mCompat;
 
     private NotificationHelper() {
-        mManager = (NotificationManager) WanApp.getApp().getSystemService(Context.NOTIFICATION_SERVICE);
-        mCompat = NotificationManagerCompat.from(WanApp.getApp());
+        mManager = (NotificationManager) WanApp.instance.getSystemService(Context.NOTIFICATION_SERVICE);
+        mCompat = NotificationManagerCompat.from(WanApp.instance);
     }
 
     public NotificationManager getManager() {

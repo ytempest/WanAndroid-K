@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-android'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt' // kapt 插件
 
 android {
     compileSdkVersion versions.compileSdk
@@ -59,7 +60,7 @@ dependencies {
     androidTestImplementationDeps.each { k, v -> androidTestImplementation v }
 
     implementationDeps.each { k, v -> implementation v }
-    annotationProcessorDeps.each { k, v -> annotationProcessor v }
+    annotationProcessorDeps.each { k, v -> kapt v }
 
     // tools
     implementation(name: 'tool-v1.0-37-g8a47b58-2020-12-21_16-09', ext: 'aar')
