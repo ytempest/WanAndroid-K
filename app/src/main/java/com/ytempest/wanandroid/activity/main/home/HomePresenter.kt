@@ -1,10 +1,10 @@
 package com.ytempest.wanandroid.activity.main.home
 
-import com.ytempest.wanandroid.http.bean.BaseResp
 import com.ytempest.tool.util.DataUtils
 import com.ytempest.wanandroid.base.presenter.BasePresenter
 import com.ytempest.wanandroid.http.bean.ArticleCollectBean
 import com.ytempest.wanandroid.http.bean.BannerBean
+import com.ytempest.wanandroid.http.bean.BaseResp
 import com.ytempest.wanandroid.http.bean.HomeArticleBean
 import com.ytempest.wanandroid.http.observer.HandlerObserver
 import com.ytempest.wanandroid.interactor.impl.BaseInteractor
@@ -110,6 +110,7 @@ class HomePresenter @Inject constructor(
                     }
 
                     override fun onFail(code: Int, e: Throwable) {
+                        super.onFail(code, e)
                         data.collect = isCollect
                         mView.onArticleCollectFail(data, code)
                     }

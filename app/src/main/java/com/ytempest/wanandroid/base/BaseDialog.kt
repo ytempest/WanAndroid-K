@@ -2,27 +2,32 @@ package com.ytempest.wanandroid.base
 
 import android.app.Dialog
 import android.content.Context
+import android.os.Bundle
 import androidx.lifecycle.GenericLifecycleObserver
 import androidx.lifecycle.Lifecycle
-import com.ytempest.layoutinjector.LayoutInjector
+import androidx.viewbinding.ViewBinding
 import com.ytempest.tool.util.LogUtils
 import com.ytempest.wanandroid.R
+import com.ytempest.wanandroid.binding.inflateViewBindingGeneric
 
 /**
  * @author heqidu
  * @since 21-2-8
  */
-open class BaseDialog(
+open class BaseDialog<VB : ViewBinding>(
         context: Context,
         themeResId: Int
 ) : Dialog(context, themeResId) {
 
     private val TAG = BaseDialog::class.java.simpleName
+    lateinit var binding: VB
 
     constructor(context: Context) : this(context, R.style.common_dialog)
 
-    init {
-        LayoutInjector.inject(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = inflateViewBindingGeneric(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onDetachedFromWindow() {
