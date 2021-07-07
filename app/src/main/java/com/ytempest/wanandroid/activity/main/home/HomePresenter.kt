@@ -22,7 +22,7 @@ class HomePresenter @Inject constructor(
         interactor: BaseInteractor
 ) : BasePresenter<IHomeView>(interactor), IHomePresenter {
 
-    private val mPageCtrl: PageCtrl = PageCtrl()
+    private val mPageCtrl = PageCtrl()
 
     override fun isUserLogin(): Boolean {
         return mInteractor.getConfigs().getUser().isUserLogin()

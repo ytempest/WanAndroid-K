@@ -29,9 +29,9 @@ class HomeArticleAdapter(
 
     override fun onCreateView(inflater: LayoutInflater, viewGroup: ViewGroup, position: Int): CoreViewHolder {
         val view = inflater.inflate(R.layout.item_home_article_content, viewGroup, false)
-        val holder = CoreViewHolder(view)
-        holder.isNeedClick = true
-        return holder
+        return CoreViewHolder(view).also {
+            it.isNeedClick = true
+        }
     }
 
     private val mOnCollectClickListener = View.OnClickListener {
@@ -46,7 +46,7 @@ class HomeArticleAdapter(
     }
 
     override fun onBindData(holder: CoreViewHolder, data: HomeArticleBean.Data, position: Int) {
-        with(holder) {
+        holder.run {
             tag = data
             val user = if (!TextUtils.isEmpty(data.shareUser)) data.shareUser
             else recyclerView.resources.getString(R.string.anonymous_develop)
@@ -56,7 +56,8 @@ class HomeArticleAdapter(
             setText(R.id.tv_item_home_article_time, DateFormat.format(data.shareDate))
         }
 
-        with(holder.getViewById<ImageView>(R.id.iv_item_home_article_collect)) {
+        val collectView = holder.getViewById<ImageView>(R.id.iv_item_home_article_collect)
+        collectView.run {
             tag = data
             isSelected = data.collect
             setOnClickListener(mOnCollectClickListener)

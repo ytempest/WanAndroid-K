@@ -16,10 +16,11 @@ import com.ytempest.wanandroid.utils.ImgLoader
 class HomeBannerBinder : AbsBannerBinder<BannerBean>(), View.OnClickListener {
 
     override fun onCreateContentView(inflater: LayoutInflater, container: ViewGroup, data: BannerBean, position: Int): View {
-        val view = inflater.inflate(R.layout.item_banner_content, container, false)
+        val view = inflater.inflate(R.layout.item_banner_content, container, false).also {
+            it.tag = data
+            it.setOnClickListener(this)
+        }
         ImgLoader.loadTo(view.findViewById(R.id.iv_item_banner), data.imagePath)
-        view.tag = data
-        view.setOnClickListener(this)
         return view
     }
 

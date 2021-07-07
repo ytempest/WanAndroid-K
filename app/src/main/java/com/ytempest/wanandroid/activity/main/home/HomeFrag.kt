@@ -21,7 +21,7 @@ import com.ytempest.wanandroid.http.bean.HomeArticleBean
  */
 class HomeFrag : LoaderFrag<HomePresenter, FragHomeBinding>(), IHomeView {
 
-    private lateinit var mAdapter: HomeArticleAdapter
+    private val mAdapter by lazy { HomeArticleAdapter(mPresenter) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,14 +33,13 @@ class HomeFrag : LoaderFrag<HomePresenter, FragHomeBinding>(), IHomeView {
         binding.refreshView.setColorSchemeResources(R.color.main_color)
         binding.refreshView.setOnRefreshListener { mPresenter.refreshHomeArticle() }
 
-        with(binding.bannerView) {
+        binding.bannerView.run {
             setBannerBinder(HomeBannerBinder())
             setPlayDuration(3000)
             setScrollDuration(1500)
         }
 
-        mAdapter = HomeArticleAdapter(mPresenter)
-        with(binding.articlesView) {
+        binding.articlesView.run {
             itemAnimator = null
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
