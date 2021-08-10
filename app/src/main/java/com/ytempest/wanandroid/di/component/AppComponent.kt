@@ -4,7 +4,6 @@ import com.ytempest.wanandroid.base.WanApp
 import com.ytempest.wanandroid.di.module.AllActivityModule
 import com.ytempest.wanandroid.di.module.AllFragmentModule
 import com.ytempest.wanandroid.di.module.InteractorModule
-import com.ytempest.wanandroid.di.module.http.HttpModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.support.AndroidSupportInjectionModule
@@ -21,8 +20,7 @@ import javax.inject.Singleton
     AndroidSupportInjectionModule::class,
     AllActivityModule::class,
     AllFragmentModule::class,
-    InteractorModule::class,
-    HttpModule::class
+    InteractorModule::class
 ])
 interface AppComponent {
     fun inject(app: WanApp)

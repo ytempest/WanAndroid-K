@@ -11,21 +11,17 @@ import javax.inject.Inject
  * @author heqidu
  * @since 21-2-8
  */
-class BaseInteractor @Inject constructor(
-        private val mHttpHelper: HttpHelper,
-        private val mDbHelper: DbHelper,
-        private val mConfigs: Configs,
-) : MvpInteractor {
+class BaseInteractor @Inject constructor() : MvpInteractor {
 
     override fun getHttpHelper(): HttpHelper {
-        return mHttpHelper
+        return BaseInteractorK.httpHelper
     }
 
     override fun getDbHelper(): DbHelper {
-        return mDbHelper
+        return BaseInteractorK.dbHelper
     }
 
     override fun getConfigs(): Configs {
-        return mConfigs
+        return BaseInteractorK.configs
     }
 }

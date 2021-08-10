@@ -2,8 +2,8 @@ package com.ytempest.wanandroid.http
 
 import com.ytempest.wanandroid.http.bean.*
 import io.reactivex.Observable
+import retrofit2.Call
 import retrofit2.http.*
-import com.ytempest.wanandroid.http.bean.BaseResp
 
 /**
  * @author heqidu
@@ -28,7 +28,7 @@ interface HttpApi {
     @FormUrlEncoded
     @POST("user/login")
     fun login(@Field("username") account: String?,
-              @Field("password") password: String?): Observable<BaseResp<LoginBean>>
+              @Field("password") password: String?): Call<BaseResp<LoginBean>>
 
     /**
      * 用户注册

@@ -1,6 +1,5 @@
 package com.ytempest.wanandroid.activity.login
 
-import com.ytempest.wanandroid.base.presenter.IPresenter
 import com.ytempest.wanandroid.base.view.IView
 import com.ytempest.wanandroid.http.ErrCode
 import com.ytempest.wanandroid.http.bean.LoginBean
@@ -12,9 +11,5 @@ import com.ytempest.wanandroid.http.bean.LoginBean
 interface ILoginView : IView {
     fun onLoginSuccess(loginBean: LoginBean)
 
-    fun onLoginFail(@ErrCode code: Int, throwable: Throwable)
-}
-
-interface ILoginPresenter : IPresenter {
-    fun login(account: String, password: String)
+    fun onLoginFail(@ErrCode code: Int, throwable: Throwable?)
 }

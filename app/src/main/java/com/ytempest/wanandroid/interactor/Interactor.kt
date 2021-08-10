@@ -1,8 +1,9 @@
 package com.ytempest.wanandroid.interactor
 
-import com.ytempest.wanandroid.interactor.configs.UserConfig
 import com.ytempest.wanandroid.http.bean.*
+import com.ytempest.wanandroid.interactor.configs.UserConfig
 import io.reactivex.Observable
+import retrofit2.Call
 
 /**
  * @author heqidu
@@ -16,7 +17,7 @@ interface MvpInteractor {
 
 interface HttpHelper {
     fun getHomeArticleList(pageNum: Int): Observable<BaseResp<HomeArticleBean>>
-    fun login(account: String, password: String): Observable<BaseResp<LoginBean>>
+    fun login(account: String, password: String): Call<BaseResp<LoginBean>>
     fun register(account: String?, pwd: String?, confirmPwd: String?): Observable<BaseResp<LoginBean>>
     fun getBannerList(): Observable<BaseResp<List<BannerBean>>>
     fun getMyCollectionList(): Observable<BaseResp<MyCollectionBean>>

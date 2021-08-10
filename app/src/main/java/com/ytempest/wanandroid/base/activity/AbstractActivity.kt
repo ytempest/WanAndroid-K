@@ -1,15 +1,22 @@
 package com.ytempest.wanandroid.base.activity
 
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.ytempest.tool.util.ToastUtils
+import com.ytempest.wanandroid.base.view.IView
 import com.ytempest.wanandroid.binding.inflateViewBindingGeneric
+import com.ytempest.wanandroid.dialog.LoadingDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 /**
  * @author heqidu
  * @since 21-2-7
  */
-abstract class AbstractActivity<VB : ViewBinding> : AppCompatActivity() {
+abstract class AbstractActivity<VB : ViewBinding> : AppCompatActivity(), IView, CoroutineScope by MainScope() {
 
     lateinit var binding: VB
 
@@ -22,4 +29,34 @@ abstract class AbstractActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     abstract fun onViewCreated()
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cancel()
+    }
+
+    /*View*/
+
+    // TODO: 确认懒加载出来的是不是同一个实例
+    private val mLoadingDialog: LoadingDialog by lazy {
+        LoadingDialog(this).apply { setAutoDismiss(lifecycle) }
+    }
+
+    override fun showLoading() {
+        mLoadingDialog.show()
+    }
+
+    override fun stopLoading() {
+        mLoadingDialog.dismiss()
+    }
+
+
+    override fun showToast(msg: String?) {
+        ToastUtils.show(this, msg)
+    }
+
+    override fun showToast(@StringRes textId: Int) {
+        ToastUtils.show(this, textId)
+    }
+
 }

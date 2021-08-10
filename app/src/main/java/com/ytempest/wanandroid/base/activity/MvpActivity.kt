@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @since 21-2-7
  */
 abstract class MvpActivity<Presenter : IPresenter, VB : ViewBinding>
-    : AbstractActivity<VB>(), HasSupportFragmentInjector, IView {
+    : AbstractActivity<VB>(), HasSupportFragmentInjector {
 
     @Inject
     protected lateinit var mPresenter: Presenter;
@@ -31,31 +31,6 @@ abstract class MvpActivity<Presenter : IPresenter, VB : ViewBinding>
 
     override fun onViewCreated() {
         mPresenter.attachView(this)
-    }
-
-    /*View*/
-
-    override fun showToast(msg: String?) {
-        ToastUtils.show(this, msg)
-    }
-
-    override fun showToast(@StringRes textId: Int) {
-        ToastUtils.show(this, textId)
-    }
-
-    // TODO: 确认懒加载出来的是不是同一个实例
-    private val mLoadingDialog: LoadingDialog by lazy {
-        val dialog = LoadingDialog(this)
-        dialog.setAutoDismiss(lifecycle)
-        dialog
-    }
-
-    override fun showLoading() {
-        mLoadingDialog.show()
-    }
-
-    override fun stopLoading() {
-        mLoadingDialog.dismiss()
     }
 
     @Inject

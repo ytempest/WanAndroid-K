@@ -1,24 +1,25 @@
 package com.ytempest.wanandroid.interactor.impl
 
+import com.ytempest.wanandroid.di.module.http.HttpModule
 import com.ytempest.wanandroid.http.HttpApi
-import com.ytempest.wanandroid.http.bean.BaseResp
-import com.ytempest.wanandroid.interactor.HttpHelper
 import com.ytempest.wanandroid.http.bean.*
+import com.ytempest.wanandroid.interactor.HttpHelper
 import io.reactivex.Observable
-import javax.inject.Inject
+import retrofit2.Call
 
 /**
  * @author heqidu
  * @since 21-2-8
  */
-class HttpHelperImpl @Inject constructor(
-        private val mHttpApi: HttpApi
-) : HttpHelper {
+
+class HttpHelperImpl : HttpHelper {
+
+    private val mHttpApi: HttpApi = HttpModule.instance.getHttpApi()
 
     override fun getHomeArticleList(pageNum: Int): Observable<BaseResp<HomeArticleBean>> =
             mHttpApi.getHomeArticleList(pageNum)
 
-    override fun login(account: String, password: String): Observable<BaseResp<LoginBean>> =
+    override fun login(account: String, password: String): Call<BaseResp<LoginBean>> =
             mHttpApi.login(account, password)
 
 
