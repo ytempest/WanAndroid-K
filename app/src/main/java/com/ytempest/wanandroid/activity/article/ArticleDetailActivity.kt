@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
@@ -20,7 +19,9 @@ import com.ytempest.tool.util.web.WebUtils
 import com.ytempest.tool.util.web.WebViewClientWrapper
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.login.LoginActivity
-import com.ytempest.wanandroid.base.activity.MvpActivity
+import com.ytempest.wanandroid.base.activity.MVVMActivity
+import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.ActivityArticleDetailBinding
 import com.ytempest.wanandroid.ext.getStringSafe
 import com.ytempest.wanandroid.helper.ArticleDetailHelper
@@ -34,7 +35,7 @@ import com.ytempest.wanandroid.widget.MaskLayout.SimpleMaskActionListener
  * @author heqidu
  * @since 21-2-22
  */
-class ArticleDetailActivity : MvpActivity<ArticleDetailPresenter, ActivityArticleDetailBinding>(), IArticleDetailView {
+class ArticleDetailActivity : MVVMActivity<ActivityArticleDetailBinding>(), IArticleDetailView {
 
     private val TAG = ArticleDetailActivity::class.qualifiedName
 
@@ -49,11 +50,11 @@ class ArticleDetailActivity : MvpActivity<ArticleDetailPresenter, ActivityArticl
         }
     }
 
+    override val viewModel by lazy { createViewModel<ArticleDetailViewModel>() }
+
     private lateinit var mArticleDetail: ArticleDetailBean
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated() {
         StatusBarUtil.immersive(this)
         StatusBarUtil.setPaddingSmart(this, binding.toolbar)
         val json = intent.getStringSafe(KEY_ARTICLE_DETAIL, null)
@@ -76,7 +77,7 @@ class ArticleDetailActivity : MvpActivity<ArticleDetailPresenter, ActivityArticl
         binding.progressBar.visibility = View.INVISIBLE
         binding.progressBar.max = MAX_PROGRESS
 
-        with(binding.webView) {
+        binding.webView.run {
             WebUtils.initWebView(context, this)
             webViewClient = object : WebViewClientWrapper() {
                 private var isLoadErr: Boolean = false
@@ -94,12 +95,21 @@ class ArticleDetailActivity : MvpActivity<ArticleDetailPresenter, ActivityArticl
                 }
 
 
-                override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+                override fun onReceivedError(
+                    view: WebView?,
+                    errorCode: Int,
+                    description: String?,
+                    failingUrl: String?
+                ) {
                     super.onReceivedError(view, errorCode, description, failingUrl)
                     isLoadErr = true
                 }
 
-                override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                override fun onReceivedError(
+                    view: WebView?,
+                    request: WebResourceRequest?,
+                    error: WebResourceError?
+                ) {
                     super.onReceivedError(view, request, error)
                     isLoadErr = true
                 }
@@ -116,12 +126,24 @@ class ArticleDetailActivity : MvpActivity<ArticleDetailPresenter, ActivityArticl
             override fun onMaskCreated(maskView: View) {
                 super.onMaskCreated(maskView)
                 maskView.findViewById<View>(R.id.tv_net_error_retry)
-                        .setOnClickListener { loadArticle(true) }
+                    .setOnClickListener { loadArticle(true) }
                 maskView.findViewById<View>(R.id.tv_net_error_setting_net)
-                        .setOnClickListener { startActivity(Intent(Settings.ACTION_SETTINGS)) }
+                    .setOnClickListener { startActivity(Intent(Settings.ACTION_SETTINGS)) }
             }
         })
 
+        initData()
+    }
+
+    private fun initData() {
+        viewModel.articleCollectResult.observe(this, EntityObserver(
+            onSuccess = { entity ->
+                onArticleCollectSuccess(entity.data)
+            },
+            onFail = { entity ->
+                onArticleCollectFail(entity.code, entity.extra as ArticleCollect)
+            }
+        ))
 
         loadArticle(false)
     }
@@ -163,7 +185,10 @@ class ArticleDetailActivity : MvpActivity<ArticleDetailPresenter, ActivityArticl
             R.id.item_article_detail_share -> {
                 val articleUrl = mArticleDetail.url
                 val intent = Intent(Intent.ACTION_SEND)
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_from, getString(R.string.app_name), articleUrl))
+                intent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    getString(R.string.share_from, getString(R.string.app_name), articleUrl)
+                )
                 intent.type = "text/plain"
                 startActivity(intent)
             }
@@ -178,9 +203,9 @@ class ArticleDetailActivity : MvpActivity<ArticleDetailPresenter, ActivityArticl
     }
 
     private fun onArticleCollectClick(item: MenuItem) {
-        if (mPresenter.isUserLogin()) {
+        if (viewModel.isUserLogin()) {
             val isCollected = !item.isChecked
-            mPresenter.updateArticleCollectStatus(isCollected, mArticleDetail.articleId)
+            viewModel.updateArticleCollectStatus(isCollected, mArticleDetail.articleId)
         } else {
             ActivityLauncher.startActivity(this, Intent(this, LoginActivity::class.java))
         }
@@ -194,12 +219,12 @@ class ArticleDetailActivity : MvpActivity<ArticleDetailPresenter, ActivityArticl
         ArticleDetailHelper.instance.postUpdate(mArticleDetail)
     }
 
-    override fun onArticleCollectSuccess(isCollect: Boolean, articleId: Long) {
-        refreshCollectArticleView(isCollect)
+    override fun onArticleCollectSuccess(collect: ArticleCollect) {
+        refreshCollectArticleView(collect.isCollect)
     }
 
-    override fun onArticleCollectFail(isCollect: Boolean, articleId: Long, errCode: Int) {
-        showToast(if (isCollect) R.string.collect_fail else R.string.cancel_fail)
+    override fun onArticleCollectFail(errCode: Int, collect: ArticleCollect) {
+        showToast(if (collect.isCollect) R.string.collect_fail else R.string.cancel_fail)
     }
 
     override fun onDestroy() {
