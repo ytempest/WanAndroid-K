@@ -46,7 +46,7 @@ class HttpHelperImpl : HttpHelper {
     override fun cancelMyCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>> =
             mHttpApi.cancelMyCollectArticle(articleId)
 
-    override fun getKnowledgeArchitecture(): Observable<BaseResp<List<KnowledgeArchitectureBean>>> =
+    override fun getKnowledgeArchitecture(): Call<BaseResp<List<KnowledgeArchitectureBean>>> =
             mHttpApi.getKnowledgeArchitecture()
 
     override fun getArchitectureContent(id: Int, page: Int): Call<BaseResp<ArchitectureContentBean>> {

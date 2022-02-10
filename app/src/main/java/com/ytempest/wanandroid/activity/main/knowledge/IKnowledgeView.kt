@@ -13,7 +13,3 @@ interface IKnowledgeView : IView {
     fun onKnowledgeArchitectureReceived(list: List<KnowledgeArchitectureBean>)
     fun onKnowledgeArchitectureFail(code: Int)
 }
-
-interface IKnowledgePresenter : IPresenter {
-    fun getKnowledgeArchitecture()
-}

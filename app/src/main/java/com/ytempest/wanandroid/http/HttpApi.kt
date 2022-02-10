@@ -86,7 +86,7 @@ interface HttpApi {
      * 获取知识体系大纲
      */
     @GET("tree/json")
-    fun getKnowledgeArchitecture(): Observable<BaseResp<List<KnowledgeArchitectureBean>>>
+    fun getKnowledgeArchitecture(): Call<BaseResp<List<KnowledgeArchitectureBean>>>
 
     /**
      * 获取指定知识体系下的内容

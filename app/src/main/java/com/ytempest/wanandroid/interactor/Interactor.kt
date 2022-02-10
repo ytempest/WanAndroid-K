@@ -26,7 +26,7 @@ interface HttpHelper {
     fun addCollectOutsideArticle(title: String?, author: String?, link: String?): Observable<BaseResp<OutsideArticleCollectBean>>
     fun cancelCollectArticle(articleId: Long): Call<BaseResp<ArticleCollectBean>>
     fun cancelMyCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>>
-    fun getKnowledgeArchitecture(): Observable<BaseResp<List<KnowledgeArchitectureBean>>>
+    fun getKnowledgeArchitecture(): Call<BaseResp<List<KnowledgeArchitectureBean>>>
 
     fun getArchitectureContent(id: Int, page: Int): Call<BaseResp<ArchitectureContentBean>>
     fun getNavigationList(): Observable<BaseResp<List<NavigationListBean>>>
