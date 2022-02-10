@@ -13,7 +13,3 @@ interface IProjectView : IView {
     fun onProjectClassifyReceived(list: List<ProjectClassifyBean>)
     fun onProjectClassifyFail(code: Int)
 }
-
-interface IProjectPresenter : IPresenter {
-    fun getProjectClassify()
-}

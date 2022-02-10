@@ -36,7 +36,7 @@ class HttpHelperImpl : HttpHelper {
             mHttpApi.addCollectArticle(articleId);
 
 
-    override fun addCollectOutsideArticle(title: String?, author: String?, link: String?): Observable<BaseResp<OutsideArticleCollectBean>> {
+    override fun addCollectOutsideArticle(title: String?, author: String?, link: String?): Call<BaseResp<OutsideArticleCollectBean>> {
         return mHttpApi.addCollectOutsideArticle(title, author, link)
     }
 
@@ -53,12 +53,12 @@ class HttpHelperImpl : HttpHelper {
         return mHttpApi.getArchitectureContent(page, id)
     }
 
-    override fun getNavigationList(): Observable<BaseResp<List<NavigationListBean>>> =
+    override fun getNavigationList(): Call<BaseResp<List<NavigationListBean>>> =
             mHttpApi.getNavigationList()
 
-    override fun getProjectClassify(): Observable<BaseResp<List<ProjectClassifyBean>>> =
+    override fun getProjectClassify(): Call<BaseResp<List<ProjectClassifyBean>>> =
             mHttpApi.getProjectClassify()
 
-    override fun getProjectContent(page: Int, cid: Int): Observable<BaseResp<ProjectContentBean>> =
+    override fun getProjectContent(page: Int, cid: Int): Call<BaseResp<ProjectContentBean>> =
             mHttpApi.getProjectContent(page, cid)
 }

@@ -66,7 +66,7 @@ interface HttpApi {
     fun addCollectOutsideArticle(@Field("title") title: String?,
                                  @Field("author") author: String?,
                                  @Field("link") link: String?)
-            : Observable<BaseResp<OutsideArticleCollectBean>>
+            : Call<BaseResp<OutsideArticleCollectBean>>
 
     /**
      * 取消文章列表的收藏
@@ -99,16 +99,16 @@ interface HttpApi {
     /*导航*/
 
     @GET("navi/json")
-    fun getNavigationList(): Observable<BaseResp<List<NavigationListBean>>>
+    fun getNavigationList(): Call<BaseResp<List<NavigationListBean>>>
 
     /*项目*/
 
     @GET("project/tree/json")
-    fun getProjectClassify(): Observable<BaseResp<List<ProjectClassifyBean>>>
+    fun getProjectClassify(): Call<BaseResp<List<ProjectClassifyBean>>>
 
     @GET("project/list/{page}/json")
     fun getProjectContent(@Path("page") page: Int,
                           @Query("cid") cid: Int)
-            : Observable<BaseResp<ProjectContentBean>>
+            : Call<BaseResp<ProjectContentBean>>
 
 }

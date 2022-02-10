@@ -2,13 +2,17 @@ package com.ytempest.wanandroid.activity.main.project.content
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ytempest.tool.util.LogUtils
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.main.project.content.list.ContentListAdapter
-import com.ytempest.wanandroid.base.fragment.LoaderFrag
+import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.wanandroid.base.fragment.MVVMFragment
+import com.ytempest.wanandroid.base.load.Loader
 import com.ytempest.wanandroid.base.load.ViewType
+import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.FragProjectContentBinding
 import com.ytempest.wanandroid.ext.getBundle
 import com.ytempest.wanandroid.http.bean.ProjectClassifyBean
@@ -21,7 +25,7 @@ import java.util.*
  * @author heqidu
  * @since 21-2-10
  */
-class ProjectContentFrag : LoaderFrag<ProjectContentPresenter, FragProjectContentBinding>(), IProjectContentView {
+class ProjectContentFrag : MVVMFragment<FragProjectContentBinding>(), IProjectContentView {
 
     private val TAG = "ProjectContentFrag"
 
@@ -36,19 +40,32 @@ class ProjectContentFrag : LoaderFrag<ProjectContentPresenter, FragProjectConten
         }
     }
 
+    override val viewModel by lazy { createViewModel<ProjectContentViewModel>() }
     private lateinit var mClassifyBean: ProjectClassifyBean
     private lateinit var mAdapter: ContentListAdapter
 
+    private val loader: Loader by lazy {
+        Loader(binding.root as ViewGroup).also {
+            it.setReloadCall {
+                it.showView(ViewType.LOAD)
+                viewModel.refreshContent(mClassifyBean)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mClassifyBean = JSON.from(getBundle().getString(KEY_CLASSIFY_DATA), ProjectClassifyBean::class.java) as ProjectClassifyBean
+        mClassifyBean = JSON.from(
+            getBundle().getString(KEY_CLASSIFY_DATA),
+            ProjectClassifyBean::class.java
+        ) as ProjectClassifyBean
         Objects.requireNonNull(mClassifyBean)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mAdapter = ContentListAdapter(mPresenter)
-        with(binding.listView) {
+        mAdapter = ContentListAdapter(viewModel)
+        binding.listView.run {
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -62,30 +79,58 @@ class ProjectContentFrag : LoaderFrag<ProjectContentPresenter, FragProjectConten
                             return
                         }
                         if (mAdapter.isEmpty && arriveBottom) {
-                            mPresenter.loadMoreProjectContent(mClassifyBean)
+                            viewModel.loadMoreProjectContent(mClassifyBean)
                         }
                     }
                 }
             })
-            getLoader().showView(ViewType.LOAD)
-            mPresenter.refreshContent(mClassifyBean)
         }
+
+        initData()
     }
 
-    override fun onReloadClick() {
-        super.onReloadClick()
-        mPresenter.refreshContent(mClassifyBean)
+    private fun initData() {
+        viewModel.projectContentResult.observe(this, EntityObserver(
+            onSuccess = { entity ->
+                val fromLoadMore = if (entity.extra is Boolean) entity.extra else false
+                if (fromLoadMore) {
+                    onMoreProjectContentLoaded(entity.data)
+                } else {
+                    displayProjectContent(entity.data)
+                }
+            },
+            onFail = { entity ->
+                val fromLoadMore = if (entity.extra is Boolean) entity.extra else false
+                if (fromLoadMore) {
+                    // do nothing
+                } else {
+                    onProjectContentFail(entity.code)
+                }
+            }
+        ))
+
+        viewModel.projectArticleCollectResult.observe(this, EntityObserver(
+            onSuccess = { entity ->
+                onProjectArticleCollectSuccess(entity.data)
+            },
+            onFail = { entity ->
+                onProjectArticleCollectFail(entity.code, entity.extra as Boolean)
+            }
+        ))
+
+        loader.showView(ViewType.LOAD)
+        viewModel.refreshContent(mClassifyBean)
     }
 
     override fun displayProjectContent(projectContent: ProjectContentBean) {
-        getLoader().hideAll()
+        loader.hideAll()
         if (projectContent.over) showToast(R.string.arrived_end)
         else mAdapter.display(projectContent.datas)
     }
 
     override fun onProjectContentFail(code: Int) {
         if (mAdapter.isEmpty) {
-            getLoader().showView(com.ytempest.wanandroid.base.load.ViewType.ERR)
+            loader.showView(ViewType.ERR)
         }
     }
 
@@ -95,8 +140,8 @@ class ProjectContentFrag : LoaderFrag<ProjectContentPresenter, FragProjectConten
     }
 
     override fun onProjectArticleCollectSuccess(bean: ProjectContentBean.Data) =
-            showToast(R.string.collect_success)
+        showToast(R.string.collect_success)
 
-    override fun onProjectArticleCollectFail(code: Int, onceCollected: Boolean, bean: ProjectContentBean.Data) =
-            showToast(if (onceCollected) R.string.once_collected else R.string.collect_fail)
+    override fun onProjectArticleCollectFail(code: Int, onceCollected: Boolean) =
+        showToast(if (onceCollected) R.string.once_collected else R.string.collect_fail)
 }

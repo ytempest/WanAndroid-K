@@ -14,11 +14,5 @@ interface INavigationView : IView {
     fun displayNavigationList(list: List<NavigationListBean>)
     fun onNavigationListFail(code: Int)
     fun onNavigationArticleCollectSuccess(article: NavigationListBean.Articles)
-    fun onNavigationArticleCollectFail(code: Int, onceCollected: Boolean, article: NavigationListBean.Articles)
-}
-
-interface INavigationPresenter : IPresenter {
-    fun getNavigationList()
-
-    fun addCollectOutsideArticle(article: NavigationListBean.Articles)
+    fun onNavigationArticleCollectFail(code: Int, onceCollected: Boolean)
 }

@@ -28,7 +28,7 @@ class TitleAdapter(list: MutableList<NavigationListBean>) : VerticalTabLayout.Ad
 }
 
 class ContentAdapter(
-        private val mPresenter: NavigationPresenter
+        private val mViewModel: NavigationViewModel
 ) : CoreRecyclerAdapter<NavigationListBean>() {
 
     override fun onCreateView(inflater: LayoutInflater, viewGroup: ViewGroup, position: Int): CoreViewHolder =
@@ -41,7 +41,7 @@ class ContentAdapter(
 
     private val mArticleTabLongClickListener: View.OnLongClickListener = View.OnLongClickListener {
         val article = it.tag as NavigationListBean.Articles
-        mPresenter.addCollectOutsideArticle(article)
+        mViewModel.addCollectOutsideArticle(article)
         true
     }
 

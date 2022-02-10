@@ -2,11 +2,15 @@ package com.ytempest.wanandroid.activity.main.navigation
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ytempest.wanandroid.R
-import com.ytempest.wanandroid.base.fragment.LoaderFrag
+import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.wanandroid.base.fragment.MVVMFragment
+import com.ytempest.wanandroid.base.load.Loader
 import com.ytempest.wanandroid.base.load.ViewType
+import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.FragNavigationBinding
 import com.ytempest.wanandroid.http.bean.NavigationListBean
 import com.ytempest.wanandroid.widget.VerticalTabLayout
@@ -15,11 +19,21 @@ import com.ytempest.wanandroid.widget.VerticalTabLayout
  * @author heqidu
  * @since 21-2-9
  */
-class NavigationFrag : LoaderFrag<NavigationPresenter, FragNavigationBinding>(), INavigationView {
+class NavigationFrag : MVVMFragment<FragNavigationBinding>(), INavigationView {
 
+    override val viewModel by lazy { createViewModel<NavigationViewModel>() }
     private lateinit var mContentAdapter: ContentAdapter
     private lateinit var mContentManager: LinearLayoutManager
     private var isFromTab: Boolean = false
+
+    private val loader: Loader by lazy {
+        Loader(binding.root as ViewGroup).also {
+            it.setReloadCall {
+                it.showView(ViewType.LOAD)
+                viewModel.loadNavigationList()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,8 +52,8 @@ class NavigationFrag : LoaderFrag<NavigationPresenter, FragNavigationBinding>(),
         })
 
         mContentManager = LinearLayoutManager(context)
-        mContentAdapter = ContentAdapter(mPresenter)
-        with(binding.listView) {
+        mContentAdapter = ContentAdapter(viewModel)
+        binding.listView.run {
             setHasFixedSize(true)
             layoutManager = mContentManager
             adapter = mContentAdapter
@@ -51,24 +65,40 @@ class NavigationFrag : LoaderFrag<NavigationPresenter, FragNavigationBinding>(),
                             // 重置数据
                             isFromTab = false
                         } else {
-                            val firstVisiblePosition = mContentManager.findFirstVisibleItemPosition()
+                            val firstVisiblePosition =
+                                mContentManager.findFirstVisibleItemPosition()
                             binding.tabView.smoothScrollToPosition(firstVisiblePosition)
                         }
                     }
                 }
             })
         }
-        loadData()
+        initData()
     }
 
-    override fun onReloadClick() {
-        super.onReloadClick()
-        loadData()
-    }
 
-    private fun loadData() {
-        getLoader().showView(ViewType.LOAD)
-        mPresenter.getNavigationList()
+    private fun initData() {
+        viewModel.navigationListResult.observe(this, EntityObserver(
+            onSuccess = { entity ->
+                displayNavigationList(entity.data)
+            },
+            onFail = { entity ->
+                onNavigationListFail(entity.code)
+            }
+        ))
+
+        viewModel.outsideArticleCollectResult.observe(this, EntityObserver(
+            onSuccess = { entity ->
+                onNavigationArticleCollectSuccess(entity.data)
+            },
+            onFail = {
+                val onceCollected = if (it.extra is Boolean) it.extra else false
+                onNavigationArticleCollectFail(it.code, onceCollected)
+            }
+        ))
+
+        loader.showView(ViewType.LOAD)
+        viewModel.loadNavigationList()
     }
 
     private fun scrollContentToPosition(pos: Int, isFromTab: Boolean) {
@@ -77,20 +107,23 @@ class NavigationFrag : LoaderFrag<NavigationPresenter, FragNavigationBinding>(),
     }
 
     override fun displayNavigationList(list: List<NavigationListBean>) {
-        getLoader().hideAll()
+        loader.hideAll()
         binding.tabView.adapter = TitleAdapter(ArrayList(list))
         mContentAdapter.display(list)
     }
 
     override fun onNavigationListFail(code: Int) {
-        getLoader().showView(ViewType.ERR)
+        loader.showView(ViewType.ERR)
     }
 
     override fun onNavigationArticleCollectSuccess(article: NavigationListBean.Articles) {
         showToast(R.string.collect_success)
     }
 
-    override fun onNavigationArticleCollectFail(code: Int, onceCollected: Boolean, article: NavigationListBean.Articles) {
+    override fun onNavigationArticleCollectFail(
+        code: Int,
+        onceCollected: Boolean,
+    ) {
         showToast(if (onceCollected) R.string.once_collected else R.string.collect_fail)
     }
 }

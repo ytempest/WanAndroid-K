@@ -12,7 +12,7 @@ import com.ytempest.tool.helper.ActivityLauncher
 import com.ytempest.tool.util.ToastUtils
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.article.ArticleDetailActivity
-import com.ytempest.wanandroid.activity.main.project.content.ProjectContentPresenter
+import com.ytempest.wanandroid.activity.main.project.content.ProjectContentViewModel
 import com.ytempest.wanandroid.ext.ctx
 import com.ytempest.wanandroid.ext.getString
 import com.ytempest.wanandroid.http.bean.ArticleDetailBean
@@ -25,7 +25,7 @@ import com.ytempest.wanandroid.utils.ImgLoader
  * @since 21-2-10
  */
 class ContentListAdapter(
-        private val mPresenter: ProjectContentPresenter
+        private val mPresenter: ProjectContentViewModel
 ) : CoreRecyclerAdapter<ProjectContentBean.Data>() {
 
     private val mCollectClickListener = View.OnClickListener {

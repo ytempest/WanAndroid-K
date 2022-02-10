@@ -23,16 +23,16 @@ interface HttpHelper {
     fun getMyCollectionList(): Observable<BaseResp<MyCollectionBean>>
 
     fun addCollectArticle(articleId: Long): Call<BaseResp<ArticleCollectBean>>
-    fun addCollectOutsideArticle(title: String?, author: String?, link: String?): Observable<BaseResp<OutsideArticleCollectBean>>
+    fun addCollectOutsideArticle(title: String?, author: String?, link: String?): Call<BaseResp<OutsideArticleCollectBean>>
     fun cancelCollectArticle(articleId: Long): Call<BaseResp<ArticleCollectBean>>
     fun cancelMyCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>>
     fun getKnowledgeArchitecture(): Call<BaseResp<List<KnowledgeArchitectureBean>>>
 
     fun getArchitectureContent(id: Int, page: Int): Call<BaseResp<ArchitectureContentBean>>
-    fun getNavigationList(): Observable<BaseResp<List<NavigationListBean>>>
-    fun getProjectClassify(): Observable<BaseResp<List<ProjectClassifyBean>>>
+    fun getNavigationList(): Call<BaseResp<List<NavigationListBean>>>
+    fun getProjectClassify(): Call<BaseResp<List<ProjectClassifyBean>>>
 
-    fun getProjectContent(page: Int, cid: Int): Observable<BaseResp<ProjectContentBean>>
+    fun getProjectContent(page: Int, cid: Int): Call<BaseResp<ProjectContentBean>>
 }
 
 
