@@ -32,10 +32,12 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         return mInteractor.configs.getUser().isUserLogin()
     }
 
-    fun <First, Second> requestMulti(firstCall: Call<BaseResp<First>>,
-                                     secondCall: Call<BaseResp<Second>>,
-                                     onSuccess: ((First, Second) -> Unit)? = null,
-                                     onFail: ((Int, Throwable?) -> Unit)? = null) {
+    fun <First, Second> requestMulti(
+        firstCall: Call<BaseResp<First>>,
+        secondCall: Call<BaseResp<Second>>,
+        onSuccess: ((First, Second) -> Unit)? = null,
+        onFail: ((Int, Throwable?) -> Unit)? = null
+    ) {
         viewModelScope.launch {
             val firstTask = async(Dispatchers.IO) { firstCall.execute().body() }
             val secondTask = async(Dispatchers.IO) { secondCall.execute().body() }
@@ -62,7 +64,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 if (LogUtils.isLoggable()) e.printStackTrace()
                 launch(Dispatchers.Main) {
                     when (e) {
-                        is HttpException, is UnknownHostException -> onFail?.invoke(ErrCode.NET_ERR, e)
+                        is HttpException, is UnknownHostException -> onFail?.invoke(
+                            ErrCode.NET_ERR,
+                            e
+                        )
                         is SocketTimeoutException -> onFail?.invoke(ErrCode.REQUEST_ERR, e)
                         else -> onFail?.invoke(ErrCode.UNKNOWN_ERR, e)
                     }
@@ -75,16 +80,16 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         if (mPageCtrl.isRequesting) return
         mPageCtrl.moveTo(PageCtrl.State.REFRESH)
         requestMulti(
-                mInteractor.httpHelper.getBannerList(),
-                mInteractor.httpHelper.getHomeArticleList(mPageCtrl.nextPage),
-                onSuccess = { bannerList, articleBean ->
-                    mPageCtrl.moveTo(PageCtrl.State.SUCCESS)
-                    homeDataResult.value = PositiveEntity(Pair(bannerList, articleBean))
-                },
-                onFail = { code, throwable ->
-                    mPageCtrl.moveTo(PageCtrl.State.FAIL)
-                    homeDataResult.value = NegativeEntity(code, throwable)
-                }
+            mInteractor.httpHelper.getBannerList(),
+            mInteractor.httpHelper.getHomeArticleList(mPageCtrl.nextPage),
+            onSuccess = { bannerList, articleBean ->
+                mPageCtrl.moveTo(PageCtrl.State.SUCCESS)
+                homeDataResult.value = PositiveEntity(Pair(bannerList, articleBean))
+            },
+            onFail = { code, throwable ->
+                mPageCtrl.moveTo(PageCtrl.State.FAIL)
+                homeDataResult.value = NegativeEntity(code, throwable)
+            }
         )
     }
 
@@ -92,45 +97,52 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         mPageCtrl.moveTo(PageCtrl.State.REFRESH)
         val lastVersion: Int = mPageCtrl.version
         request(mInteractor.httpHelper.getHomeArticleList(mPageCtrl.nextPage),
-                onSuccess = { homeArticleBean ->
-                    mPageCtrl.moveTo(PageCtrl.State.SUCCESS)
-                    if (mPageCtrl.isDataVersionValid(lastVersion)) {
-                        homeArticlesResult.value = PositiveEntity(Pair(true, homeArticleBean))
-                    }
-                },
-                onFail = { code: Int, throwable: Throwable? ->
-                    mPageCtrl.moveTo(PageCtrl.State.FAIL)
-                })
+            onSuccess = { homeArticleBean ->
+                mPageCtrl.moveTo(PageCtrl.State.SUCCESS)
+                if (mPageCtrl.isDataVersionValid(lastVersion)) {
+                    homeArticlesResult.value = PositiveEntity(Pair(true, homeArticleBean))
+                }
+            },
+            onFail = { code: Int, throwable: Throwable? ->
+                mPageCtrl.moveTo(PageCtrl.State.FAIL)
+            })
     }
 
     fun loadMoreHomeArticle() {
         if (mPageCtrl.isRequesting) return
         mPageCtrl.moveTo(PageCtrl.State.LOAD_MORE)
         request(mInteractor.httpHelper.getHomeArticleList(mPageCtrl.nextPage),
-                onSuccess = { homeArticleBean ->
-                    mPageCtrl.moveTo(PageCtrl.State.SUCCESS)
-                    homeArticlesResult.value = PositiveEntity(Pair(false, homeArticleBean))
-                },
-                onFail = { code: Int, throwable: Throwable? ->
-                    mPageCtrl.moveTo(PageCtrl.State.FAIL)
-                }
+            onSuccess = { homeArticleBean ->
+                mPageCtrl.moveTo(PageCtrl.State.SUCCESS)
+                homeArticlesResult.value = PositiveEntity(Pair(false, homeArticleBean))
+            },
+            onFail = { code: Int, throwable: Throwable? ->
+                mPageCtrl.moveTo(PageCtrl.State.FAIL)
+            }
         )
     }
 
     fun updateArticleCollectStatus(article: HomeArticleBean.Data) {
         val isCollect = !article.collect
-        val collectCall = if (isCollect) mInteractor.httpHelper.addCollectArticle(article.id) // 收藏文章
-        else mInteractor.httpHelper.cancelCollectArticle(article.id) // 取消收藏
+        val collectCall =
+            if (isCollect) mInteractor.httpHelper.addCollectArticle(article.id) // 收藏文章
+            else mInteractor.httpHelper.cancelCollectArticle(article.id) // 取消收藏
 
         request(
-                collectCall,
-                onSuccess = { data ->
-                    article.collect = isCollect
-                    homeArticleCollectResult.value = PositiveEntity(article)
-                },
-                onFail = { code, throwable ->
-                    homeArticleCollectResult.value = NegativeEntity(code, throwable, article)
+            collectCall,
+            responseHook = { resp ->
+                if (resp.isSuccess()) {
+                    // 保证数据不为空
+                    resp.setData(resp.getData() ?: ArticleCollectBean())
                 }
+            },
+            onSuccess = { data ->
+                article.collect = isCollect
+                homeArticleCollectResult.value = PositiveEntity(article)
+            },
+            onFail = { code, throwable ->
+                homeArticleCollectResult.value = NegativeEntity(code, throwable, article)
+            }
         )
     }
 

@@ -17,13 +17,16 @@ import java.net.UnknownHostException
  * @author ytempest
  * @since 2021/8/9
  */
-open class BaseViewModel(application: Application) : AndroidViewModel(application), CoroutineScope by MainScope() {
+open class BaseViewModel(application: Application) : AndroidViewModel(application),
+    CoroutineScope by MainScope() {
 
     val mInteractor = BaseInteractorK
 
-    fun <T> request(call: Call<BaseResp<T>>,
-                    onSuccess: ((T) -> Unit)? = null,
-                    onFail: ((Int, Throwable?) -> Unit)? = null
+    fun <T> request(
+        call: Call<BaseResp<T>>,
+        responseHook: ((BaseResp<T>) -> Unit)? = null,
+        onSuccess: ((T) -> Unit)? = null,
+        onFail: ((Int, Throwable?) -> Unit)? = null,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -31,6 +34,14 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                 launch(Dispatchers.Main) {
                     if (resp == null) {
                         onFail?.invoke(ErrCode.EMPTY_RESP, null)
+                        return@launch
+                    }
+
+                    // 拦截
+                    responseHook?.invoke(resp)
+
+                    if (!resp.isSuccess()) {
+                        onFail?.invoke(ErrCode.SRC_ERR, null)
                         return@launch
                     }
 
