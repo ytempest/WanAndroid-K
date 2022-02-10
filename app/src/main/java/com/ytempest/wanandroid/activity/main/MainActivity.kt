@@ -5,20 +5,22 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.ytempest.tool.helper.ExpandFragHelper
 import com.ytempest.wanandroid.R
-import com.ytempest.wanandroid.base.activity.MvpActivity
+import com.ytempest.wanandroid.base.activity.MVVMActivity
+import com.ytempest.wanandroid.base.createViewModel
 import com.ytempest.wanandroid.databinding.ActivityMainBinding
 
 /**
  * @author heqidu
  * @since 21-2-8
  */
-class MainActivity : MvpActivity<MainPresenter, ActivityMainBinding>(), IMainView {
+class MainActivity : MVVMActivity<ActivityMainBinding>(), IMainView {
+
+    override val viewModel by lazy { createViewModel<MainViewModel>() }
 
     private val mFragHelper: ExpandFragHelper by lazy { ExpandFragHelper(supportFragmentManager, MainFragConstructor()) }
     private var mCurFrag: Fragment? = null
 
     override fun onViewCreated() {
-        super.onViewCreated()
         initTabs()
     }
 

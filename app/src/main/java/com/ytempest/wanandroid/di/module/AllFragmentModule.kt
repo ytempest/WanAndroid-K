@@ -1,6 +1,5 @@
 package com.ytempest.wanandroid.di.module
 
-import com.ytempest.wanandroid.activity.architecture.content.ArchArticleFrag
 import com.ytempest.wanandroid.activity.main.home.HomeFrag
 import com.ytempest.wanandroid.activity.main.knowledge.KnowledgeFrag
 import com.ytempest.wanandroid.activity.main.navigation.NavigationFrag
@@ -30,7 +29,4 @@ abstract class AllFragmentModule {
 
     @ContributesAndroidInjector(modules = [FragEmptyModule::class])
     abstract fun contributeClassifyContentFragInjector(): ProjectContentFrag
-
-    @ContributesAndroidInjector(modules = [FragEmptyModule::class])
-    abstract fun contributeArchArticleFragInjector(): ArchArticleFrag
 }

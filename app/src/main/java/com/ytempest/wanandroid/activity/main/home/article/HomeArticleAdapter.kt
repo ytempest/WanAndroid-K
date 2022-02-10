@@ -13,7 +13,7 @@ import com.ytempest.tool.util.ToastUtils
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.article.ArticleDetailActivity
 import com.ytempest.wanandroid.activity.login.LoginActivity
-import com.ytempest.wanandroid.activity.main.home.HomePresenter
+import com.ytempest.wanandroid.activity.main.home.HomeViewModel
 import com.ytempest.wanandroid.ext.ctx
 import com.ytempest.wanandroid.http.bean.ArticleDetailBean
 import com.ytempest.wanandroid.http.bean.HomeArticleBean
@@ -24,7 +24,7 @@ import com.ytempest.wanandroid.utils.DateFormat
  * @since 21-2-9
  */
 class HomeArticleAdapter(
-        private val mPresenter: HomePresenter
+        private val viewModel: HomeViewModel
 ) : CoreRecyclerAdapter<HomeArticleBean.Data>() {
 
     override fun onCreateView(inflater: LayoutInflater, viewGroup: ViewGroup, position: Int): CoreViewHolder {
@@ -35,9 +35,9 @@ class HomeArticleAdapter(
     }
 
     private val mOnCollectClickListener = View.OnClickListener {
-        if (mPresenter.isUserLogin()) {
+        if (viewModel.isUserLogin()) {
             val data = it.tag as HomeArticleBean.Data
-            mPresenter.updateArticleCollectStatus(data)
+            viewModel.updateArticleCollectStatus(data)
 
         } else {
             ToastUtils.show(it.ctx, R.string.login_please)

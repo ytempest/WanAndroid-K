@@ -11,6 +11,7 @@ import com.ytempest.tool.adapter.CoreViewHolder
 import com.ytempest.tool.helper.ActivityLauncher
 import com.ytempest.tool.util.ToastUtils
 import com.ytempest.wanandroid.R
+import com.ytempest.wanandroid.activity.architecture.ArchitectureViewModel
 import com.ytempest.wanandroid.activity.article.ArticleDetailActivity
 import com.ytempest.wanandroid.activity.login.LoginActivity
 import com.ytempest.wanandroid.ext.ctx
@@ -24,7 +25,7 @@ import com.ytempest.wanandroid.utils.DateFormat
  * @since 21-2-22
  */
 class ArchArticleAdapter(
-        private val mPresenter: ArchArticlePresenter
+        private val viewModel: ArchArticleViewModel
 ) : CoreRecyclerAdapter<ArchitectureContentBean.Data>() {
 
     override fun onCreateView(inflater: LayoutInflater, viewGroup: ViewGroup?, position: Int): CoreViewHolder? {
@@ -35,10 +36,10 @@ class ArchArticleAdapter(
     }
 
     private val mCollectClickListener = View.OnClickListener {
-        if (mPresenter.isUserLogin()) {
+        if (viewModel.isUserLogin()) {
             val article = it.tag as ArchitectureContentBean.Data
             val newCollectStatus = !article.collect
-            mPresenter.updateArticleCollectStatus(newCollectStatus, article)
+            viewModel.updateArticleCollectStatus(newCollectStatus, article)
         } else {
             ToastUtils.show(it.ctx, R.string.login_please);
             ActivityLauncher.startActivity(it.ctx, Intent(it.ctx, LoginActivity::class.java))

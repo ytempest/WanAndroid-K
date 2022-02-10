@@ -2,13 +2,17 @@ package com.ytempest.wanandroid.activity.architecture.content
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ytempest.tool.util.LogUtils
 import com.ytempest.wanandroid.R
-import com.ytempest.wanandroid.base.fragment.LoaderFrag
+import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.wanandroid.base.fragment.MVVMFragment
+import com.ytempest.wanandroid.base.load.Loader
 import com.ytempest.wanandroid.base.load.ViewType
+import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.FragArchContentBinding
 import com.ytempest.wanandroid.ext.getBundle
 import com.ytempest.wanandroid.helper.ArticleDetailHelper
@@ -22,7 +26,18 @@ import com.ytempest.wanandroid.utils.Utils
  * @author heqidu
  * @since 21-2-22
  */
-class ArchArticleFrag : LoaderFrag<ArchArticlePresenter, FragArchContentBinding>(), IArchArticleView {
+class ArchArticleFrag() : MVVMFragment<FragArchContentBinding>(), IArchArticleView {
+
+    override val viewModel by lazy { createViewModel<ArchArticleViewModel>() }
+
+    private val loader: Loader by lazy {
+        Loader(binding.root as ViewGroup).also {
+            it.setReloadCall {
+                it.showView(ViewType.LOAD)
+                viewModel.refreshArchitectureContent(mBean.id)
+            }
+        }
+    }
 
     private val TAG = "ArchArticleFrag"
 
@@ -49,7 +64,7 @@ class ArchArticleFrag : LoaderFrag<ArchArticlePresenter, FragArchContentBinding>
             return
         }
 
-        mAdapter = ArchArticleAdapter(mPresenter)
+        mAdapter = ArchArticleAdapter(viewModel)
         with(binding.contentView) {
             itemAnimator = null
             layoutManager = LinearLayoutManager(context)
@@ -66,7 +81,7 @@ class ArchArticleFrag : LoaderFrag<ArchArticlePresenter, FragArchContentBinding>
                         }
 
                         if (!mAdapter.isEmpty && arriveBottom) {
-                            mPresenter.loadMoreArchitectureContent(mBean.id)
+                            viewModel.loadMoreArchitectureContent(mBean.id)
                         }
                     }
                 }
@@ -85,21 +100,45 @@ class ArchArticleFrag : LoaderFrag<ArchArticlePresenter, FragArchContentBinding>
         })
 
 
-        getLoader().showView(ViewType.LOAD);
-        mPresenter.refreshArchitectureContent(mBean.id);
+        loader.showView(ViewType.LOAD);
+        viewModel.refreshArchitectureContent(mBean.id);
+
+        initData()
     }
 
-    override fun onReloadClick() {
-        super.onReloadClick()
-        mPresenter.refreshArchitectureContent(mBean.id)
+    private fun initData() {
+        viewModel.architectureContentResult.observe(this, EntityObserver(
+                onSuccess = { entity ->
+                    onLoadArchitectureContent(entity.data, true)
+                },
+                onFail = { entity ->
+                    onRefreshArchitectureFail(entity.code)
+                }
+        ))
+        viewModel.moreArchitectureContentResult.observe(this, EntityObserver(
+                onSuccess = { entity ->
+                    onLoadArchitectureContent(entity.data, false)
+                },
+                onFail = { entity ->
+                    onRefreshArchitectureFail(entity.code)
+                }
+        ))
+        viewModel.archArticleCollectResult.observe(this, EntityObserver(
+                onSuccess = { entity ->
+                    onArchArticleCollectSuccess(entity.data)
+                },
+                onFail = { entity ->
+                    onArchArticleCollectFail(entity.extra as ArchitectureContentBean.Data, entity.code)
+                }
+        ))
     }
 
     override fun onRefreshArchitectureFail(code: Int) {
-        getLoader().showView(ViewType.ERR);
+        loader.showView(ViewType.ERR);
     }
 
     override fun onLoadArchitectureContent(content: ArchitectureContentBean, fromRefresh: Boolean) {
-        getLoader().hideAll();
+        loader.hideAll();
         when {
             fromRefresh -> mAdapter.display(content.datas)
             content.over -> showToast(R.string.arrived_end)
@@ -107,12 +146,11 @@ class ArchArticleFrag : LoaderFrag<ArchArticlePresenter, FragArchContentBinding>
         }
     }
 
-    override fun onArchArticleCollectSuccess(isCollect: Boolean, article: ArchitectureContentBean.Data) {
-        article.collect = isCollect;
+    override fun onArchArticleCollectSuccess(article: ArchitectureContentBean.Data) {
         mAdapter.refresh(article);
     }
 
-    override fun onArchArticleCollectFail(isCollect: Boolean, article: ArchitectureContentBean.Data, code: Int) {
-        showToast(if (isCollect) R.string.collect_fail else R.string.cancel_fail)
+    override fun onArchArticleCollectFail(article: ArchitectureContentBean.Data, code: Int) {
+        showToast(if (article.collect) R.string.collect_fail else R.string.cancel_fail)
     }
 }

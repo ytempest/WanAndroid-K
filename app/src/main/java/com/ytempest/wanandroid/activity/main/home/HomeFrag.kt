@@ -2,13 +2,17 @@ package com.ytempest.wanandroid.activity.main.home
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.main.home.article.HomeArticleAdapter
-import com.ytempest.wanandroid.base.fragment.LoaderFrag
+import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.wanandroid.base.fragment.MVVMFragment
+import com.ytempest.wanandroid.base.load.Loader
 import com.ytempest.wanandroid.base.load.ViewType
+import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.FragHomeBinding
 import com.ytempest.wanandroid.helper.ArticleDetailHelper
 import com.ytempest.wanandroid.http.bean.ArticleDetailBean
@@ -19,9 +23,19 @@ import com.ytempest.wanandroid.http.bean.HomeArticleBean
  * @author heqidu
  * @since 21-2-9
  */
-class HomeFrag : LoaderFrag<HomePresenter, FragHomeBinding>(), IHomeView {
+class HomeFrag : MVVMFragment<FragHomeBinding>(), IHomeView {
 
-    private val mAdapter by lazy { HomeArticleAdapter(mPresenter) }
+    override val viewModel by lazy { createViewModel<HomeViewModel>() }
+    private val mAdapter by lazy { HomeArticleAdapter(viewModel) }
+
+    private val loader: Loader by lazy {
+        Loader(binding.root as ViewGroup).also {
+            it.setReloadCall {
+                it.showView(ViewType.LOAD)
+                viewModel.loadHomeData()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,9 +45,9 @@ class HomeFrag : LoaderFrag<HomePresenter, FragHomeBinding>(), IHomeView {
 
     private fun initView() {
         binding.refreshView.setColorSchemeResources(R.color.main_color)
-        binding.refreshView.setOnRefreshListener { mPresenter.refreshHomeArticle() }
+        binding.refreshView.setOnRefreshListener { viewModel.refreshHomeArticle() }
 
-        binding.bannerView.run {
+        binding.bannerView.apply {
             setBannerBinder(HomeBannerBinder())
             setPlayDuration(3000)
             setScrollDuration(1500)
@@ -48,7 +62,7 @@ class HomeFrag : LoaderFrag<HomePresenter, FragHomeBinding>(), IHomeView {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (isArriveBottom()) {
-                        mPresenter.loadMoreHomeArticle()
+                        viewModel.loadMoreHomeArticle()
                     }
                 }
             })
@@ -65,8 +79,7 @@ class HomeFrag : LoaderFrag<HomePresenter, FragHomeBinding>(), IHomeView {
     }
 
     private fun initData() {
-        getLoader().showView(ViewType.LOAD)
-        mPresenter.loadHomeData()
+        loader.showView(ViewType.LOAD)
         ArticleDetailHelper.instance.getArticleUpdateDetail().observe(viewLifecycleOwner, Observer {
             if (it == null || it.source != ArticleDetailBean.Source.HOME) {
                 return@Observer;
@@ -78,22 +91,44 @@ class HomeFrag : LoaderFrag<HomePresenter, FragHomeBinding>(), IHomeView {
                 }
             }
         })
-    }
 
-    override fun onReloadClick() {
-        super.onReloadClick()
-        mPresenter.loadHomeData()
+        viewModel.homeDataResult.observe(this, EntityObserver(
+                onSuccess = { entity ->
+                    val (bannerList, bean) = entity.data
+                    onHomeDataSuccess(bannerList, bean)
+                },
+                onFail = { entity ->
+                    onHomeDataFail(entity.code)
+                }
+        ))
+
+        viewModel.homeArticlesResult.observe(this, EntityObserver(
+                onSuccess = { entity ->
+                    val (fromRefresh, bean) = entity.data
+                    displayHomeArticle(fromRefresh, bean)
+                }
+        ))
+
+        viewModel.homeArticleCollectResult.observe(this, EntityObserver(
+                onSuccess = { entity ->
+                    onArticleCollectSuccess(entity.data)
+                },
+                onFail = { entity ->
+                    onArticleCollectFail(entity.extra as HomeArticleBean.Data, entity.code)
+                }
+        ))
+
+        viewModel.loadHomeData()
     }
 
     override fun onHomeDataSuccess(bannerList: List<BannerBean>, bean: HomeArticleBean) {
-        getLoader().hideAll()
+        loader.hideAll()
         binding.bannerView.display(bannerList)
         mAdapter.display(bean.datas)
-
     }
 
     override fun onHomeDataFail(code: Int) {
-        getLoader().showView(ViewType.ERR)
+        loader.showView(ViewType.ERR)
     }
 
     override fun displayHomeArticle(fromRefresh: Boolean, homeArticleBean: HomeArticleBean) {
@@ -128,6 +163,6 @@ class HomeFrag : LoaderFrag<HomePresenter, FragHomeBinding>(), IHomeView {
 
 
     override fun onArticleCollectFail(data: HomeArticleBean.Data, code: Int) {
-        showToast(if (data.collect) R.string.collect_fail else R.string.cancel_fail)
+        showToast(if (!data.collect) R.string.collect_fail else R.string.cancel_fail)
     }
 }

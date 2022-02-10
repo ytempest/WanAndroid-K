@@ -20,7 +20,7 @@ interface HttpApi {
      * @return 首页文章列表
      */
     @GET("article/list/{pageNum}/json")
-    fun getHomeArticleList(@Path("pageNum") pageNum: Int): Observable<BaseResp<HomeArticleBean>>
+    fun getHomeArticleList(@Path("pageNum") pageNum: Int): Call<BaseResp<HomeArticleBean>>
 
     /**
      * 用户登录
@@ -37,13 +37,13 @@ interface HttpApi {
     @POST("user/register")
     fun register(@Field("username") account: String?,
                  @Field("password") pwd: String?,
-                 @Field("repassword") confirmPwd: String?): Observable<BaseResp<LoginBean>>
+                 @Field("repassword") confirmPwd: String?): Call<BaseResp<LoginBean>>
 
     /**
      * 首页Banner
      */
     @GET("banner/json")
-    fun getBannerList(): Observable<BaseResp<List<BannerBean>>>
+    fun getBannerList(): Call<BaseResp<List<BannerBean>>>
 
 
     /**
@@ -56,7 +56,7 @@ interface HttpApi {
      * 收藏站内文章
      */
     @POST("lg/collect/{id}/json")
-    fun addCollectArticle(@Path("id") articleId: Long): Observable<BaseResp<ArticleCollectBean>>
+    fun addCollectArticle(@Path("id") articleId: Long): Call<BaseResp<ArticleCollectBean>>
 
     /**
      * 收藏站外文章
@@ -72,7 +72,7 @@ interface HttpApi {
      * 取消文章列表的收藏
      */
     @POST("lg/uncollect_originId/{id}/json")
-    fun cancelCollectArticle(@Path("id") articleId: Long): Observable<BaseResp<ArticleCollectBean>>
+    fun cancelCollectArticle(@Path("id") articleId: Long): Call<BaseResp<ArticleCollectBean>>
 
     /**
      * 取消我的收藏页面的收藏文章
@@ -94,7 +94,7 @@ interface HttpApi {
     @GET("article/list/{page}/json")
     fun getArchitectureContent(@Path("page") page: Int,
                                @Query("cid") id: Int)
-            : Observable<BaseResp<ArchitectureContentBean>>
+            : Call<BaseResp<ArchitectureContentBean>>
 
     /*导航*/
 

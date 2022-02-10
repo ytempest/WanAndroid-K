@@ -1,12 +1,12 @@
 package com.ytempest.wanandroid.activity.login
 
 import android.text.InputFilter
-import androidx.lifecycle.ViewModelProviders
 import com.ytempest.tool.helper.ActivityLauncher
 import com.ytempest.tool.util.RegexUtils
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.register.RegisterActivity
-import com.ytempest.wanandroid.base.activity.AbstractActivity
+import com.ytempest.wanandroid.base.activity.MVVMActivity
+import com.ytempest.wanandroid.base.createViewModel
 import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.ActivityLoginBinding
 import com.ytempest.wanandroid.http.ErrCode
@@ -19,9 +19,10 @@ import com.ytempest.wanandroid.utils.SpaceInputFilter
  * @author heqidu
  * @since 21-2-22
  */
-class LoginActivity : AbstractActivity<ActivityLoginBinding>(), ILoginView {
 
-    private val viewModel by lazy { ViewModelProviders.of(this).get(LoginViewModel::class.java) }
+class LoginActivity : MVVMActivity<ActivityLoginBinding>(), ILoginView {
+
+    override val viewModel by lazy { createViewModel<LoginViewModel>() }
 
     override fun onViewCreated() {
         binding.apply {

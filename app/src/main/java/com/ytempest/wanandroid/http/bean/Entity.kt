@@ -13,5 +13,6 @@ class PositiveEntity<T>(
 
 class NegativeEntity<T>(
         val code: Int,
-        val throwable: Throwable?
+        val throwable: Throwable?,
+        val extra: Any? = null
 ) : Entity<T>()

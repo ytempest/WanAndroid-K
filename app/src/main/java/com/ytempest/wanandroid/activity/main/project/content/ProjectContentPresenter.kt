@@ -25,7 +25,7 @@ class ProjectContentPresenter @Inject constructor(
         mPageCtrl.moveTo(PageCtrl.State.REFRESH)
         mInteractor.getHttpHelper().getProjectContent(mPageCtrl.nextPage, classify.id)
                 .compose(RxUtils.switchScheduler())
-                .filter(mPageCtrl.filterDirtyData())
+//                .filter(mPageCtrl.filterDirtyData())
                 .subscribe(object : HandlerObserver<ProjectContentBean>(mView) {
                     override fun onSuccess(projectContent: ProjectContentBean) {
                         mPageCtrl.moveTo(PageCtrl.State.SUCCESS)
@@ -45,7 +45,7 @@ class ProjectContentPresenter @Inject constructor(
         mPageCtrl.moveTo(PageCtrl.State.LOAD_MORE)
         mInteractor.getHttpHelper().getProjectContent(mPageCtrl.nextPage, classifyBean.id)
                 .compose<BaseResp<ProjectContentBean>>(RxUtils.switchScheduler<BaseResp<ProjectContentBean>>())
-                .filter(mPageCtrl.filterDirtyData())
+//                .filter(mPageCtrl.filterDirtyData())
                 .subscribe(object : HandlerObserver<ProjectContentBean>(mView, Flags.SHOW_ERR_MSG) {
                     override fun onSuccess(projectContent: ProjectContentBean) {
                         mPageCtrl.moveTo(PageCtrl.State.SUCCESS)

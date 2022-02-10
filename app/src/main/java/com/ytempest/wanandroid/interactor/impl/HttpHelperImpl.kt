@@ -16,23 +16,23 @@ class HttpHelperImpl : HttpHelper {
 
     private val mHttpApi: HttpApi = HttpModule.instance.getHttpApi()
 
-    override fun getHomeArticleList(pageNum: Int): Observable<BaseResp<HomeArticleBean>> =
+    override fun getHomeArticleList(pageNum: Int): Call<BaseResp<HomeArticleBean>> =
             mHttpApi.getHomeArticleList(pageNum)
 
     override fun login(account: String, password: String): Call<BaseResp<LoginBean>> =
             mHttpApi.login(account, password)
 
 
-    override fun register(account: String?, pwd: String?, confirmPwd: String?): Observable<BaseResp<LoginBean>> =
+    override fun register(account: String?, pwd: String?, confirmPwd: String?): Call<BaseResp<LoginBean>> =
             mHttpApi.register(account, pwd, confirmPwd)
 
-    override fun getBannerList(): Observable<BaseResp<List<BannerBean>>> =
+    override fun getBannerList(): Call<BaseResp<List<BannerBean>>> =
             mHttpApi.getBannerList()
 
     override fun getMyCollectionList(): Observable<BaseResp<MyCollectionBean>> =
             mHttpApi.getMyCollectionList();
 
-    override fun addCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>> =
+    override fun addCollectArticle(articleId: Long): Call<BaseResp<ArticleCollectBean>> =
             mHttpApi.addCollectArticle(articleId);
 
 
@@ -40,7 +40,7 @@ class HttpHelperImpl : HttpHelper {
         return mHttpApi.addCollectOutsideArticle(title, author, link)
     }
 
-    override fun cancelCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>> =
+    override fun cancelCollectArticle(articleId: Long): Call<BaseResp<ArticleCollectBean>> =
             mHttpApi.cancelCollectArticle(articleId)
 
     override fun cancelMyCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>> =
@@ -49,7 +49,7 @@ class HttpHelperImpl : HttpHelper {
     override fun getKnowledgeArchitecture(): Observable<BaseResp<List<KnowledgeArchitectureBean>>> =
             mHttpApi.getKnowledgeArchitecture()
 
-    override fun getArchitectureContent(id: Int, page: Int): Observable<BaseResp<ArchitectureContentBean>> {
+    override fun getArchitectureContent(id: Int, page: Int): Call<BaseResp<ArchitectureContentBean>> {
         return mHttpApi.getArchitectureContent(page, id)
     }
 

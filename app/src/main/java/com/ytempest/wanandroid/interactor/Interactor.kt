@@ -16,19 +16,19 @@ interface MvpInteractor {
 }
 
 interface HttpHelper {
-    fun getHomeArticleList(pageNum: Int): Observable<BaseResp<HomeArticleBean>>
+    fun getHomeArticleList(pageNum: Int): Call<BaseResp<HomeArticleBean>>
     fun login(account: String, password: String): Call<BaseResp<LoginBean>>
-    fun register(account: String?, pwd: String?, confirmPwd: String?): Observable<BaseResp<LoginBean>>
-    fun getBannerList(): Observable<BaseResp<List<BannerBean>>>
+    fun register(account: String?, pwd: String?, confirmPwd: String?): Call<BaseResp<LoginBean>>
+    fun getBannerList(): Call<BaseResp<List<BannerBean>>>
     fun getMyCollectionList(): Observable<BaseResp<MyCollectionBean>>
 
-    fun addCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>>
+    fun addCollectArticle(articleId: Long): Call<BaseResp<ArticleCollectBean>>
     fun addCollectOutsideArticle(title: String?, author: String?, link: String?): Observable<BaseResp<OutsideArticleCollectBean>>
-    fun cancelCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>>
+    fun cancelCollectArticle(articleId: Long): Call<BaseResp<ArticleCollectBean>>
     fun cancelMyCollectArticle(articleId: Long): Observable<BaseResp<ArticleCollectBean>>
     fun getKnowledgeArchitecture(): Observable<BaseResp<List<KnowledgeArchitectureBean>>>
 
-    fun getArchitectureContent(id: Int, page: Int): Observable<BaseResp<ArchitectureContentBean>>
+    fun getArchitectureContent(id: Int, page: Int): Call<BaseResp<ArchitectureContentBean>>
     fun getNavigationList(): Observable<BaseResp<List<NavigationListBean>>>
     fun getProjectClassify(): Observable<BaseResp<List<ProjectClassifyBean>>>
 

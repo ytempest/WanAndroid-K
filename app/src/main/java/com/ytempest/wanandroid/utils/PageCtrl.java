@@ -86,11 +86,8 @@ public final class PageCtrl {
     /**
      * 检查是否过滤掉由于网络问题引起的，请求不同页码数据时的旧数据问题
      */
-    public <T> Predicate<T> filterDirtyData() {
-        final int lastVersion = getVersion();
-        return data -> {
-            LogUtils.d(TAG, String.format("filterDirtyData: 该次操作的页码版本: %d, 当前页码版本: %d, 该次操作的数据是否有效： %s", lastVersion, version.get(), isSameVersion(lastVersion)));
-            return isSameVersion(lastVersion);
-        };
+    public boolean isDataVersionValid(int lastVersion) {
+        LogUtils.d(TAG, String.format("filterDirtyData: 该次操作的页码版本: %d, 当前页码版本: %d, 该次操作的数据是否有效： %s", lastVersion, version.get(), isSameVersion(lastVersion)));
+        return isSameVersion(lastVersion);
     }
 }

@@ -21,17 +21,17 @@ class ArticleDetailPresenter @Inject constructor(
         val collectObservable = if (isCollect) mInteractor.getHttpHelper().addCollectArticle(articleId) // 收藏文章
         else mInteractor.getHttpHelper().cancelCollectArticle(articleId) // 取消收藏
 
-        collectObservable.compose(RxUtils.switchScheduler())
-                .map(RxUtils.checkArticleCollectData())
-                .subscribe(object : HandlerObserver<ArticleCollectBean>(mView, Flags.SHOW_LOADING) {
-                    override fun onSuccess(bean: ArticleCollectBean) {
-                        mView.onArticleCollectSuccess(isCollect, articleId)
-                    }
-
-                    override fun onFail(code: Int, e: Throwable) {
-                        super.onFail(code, e)
-                        mView.onArticleCollectFail(isCollect, articleId, code)
-                    }
-                })
+//        collectObservable.compose(RxUtils.switchScheduler())
+//                .map(RxUtils.checkArticleCollectData())
+//                .subscribe(object : HandlerObserver<ArticleCollectBean>(mView, Flags.SHOW_LOADING) {
+//                    override fun onSuccess(bean: ArticleCollectBean) {
+//                        mView.onArticleCollectSuccess(isCollect, articleId)
+//                    }
+//
+//                    override fun onFail(code: Int, e: Throwable) {
+//                        super.onFail(code, e)
+//                        mView.onArticleCollectFail(isCollect, articleId, code)
+//                    }
+//                })
     }
 }
