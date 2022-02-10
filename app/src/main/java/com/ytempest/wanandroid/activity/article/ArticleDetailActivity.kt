@@ -65,7 +65,7 @@ class ArticleDetailActivity : MVVMActivity<ActivityArticleDetailBinding>(), IArt
             return
         }
         mArticleDetail = detail
-        LogUtils.d(TAG, "onCreate: 文章信息：" + JSON.toJson(mArticleDetail))
+        if (LogUtils.isLoggable()) LogUtils.d(TAG, "onCreate: 文章信息：" + JSON.toJson(mArticleDetail))
 
         // 标题要在setSupportActionBar()前设置
         with(binding.toolbar) {
@@ -150,7 +150,7 @@ class ArticleDetailActivity : MVVMActivity<ActivityArticleDetailBinding>(), IArt
 
     private fun loadArticle(forceRefresh: Boolean) {
         if (binding.progressBar.visibility == View.VISIBLE) {
-            LogUtils.d(TAG, "loadArticle: 正在加载")
+            if (LogUtils.isLoggable()) LogUtils.d(TAG, "loadArticle: 正在加载")
             return
         }
 

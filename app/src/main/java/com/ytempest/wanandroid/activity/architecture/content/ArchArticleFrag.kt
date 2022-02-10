@@ -76,7 +76,7 @@ class ArchArticleFrag() : MVVMFragment<FragArchContentBinding>(), IArchArticleVi
                         val arriveBottom = Utils.isArriveBottom(recyclerView)
                         val arriveTop = Utils.isArriveTop(recyclerView)
                         if (arriveTop && arriveBottom) {
-                            LogUtils.d(TAG, "onScrollStateChanged: 已经展示所有数据")
+                            if (LogUtils.isLoggable()) LogUtils.d(TAG, "onScrollStateChanged: 已经展示所有数据")
                             return
                         }
 

@@ -129,13 +129,13 @@ class NetEventListener(
         super.callEnd(call)
         mNetEvent.callEndTime = System.currentTimeMillis()
         mNetEvent.requestSuccess = true
-        LogUtils.d(TAG, mNetEvent.toString())
+        if (LogUtils.isLoggable()) LogUtils.d(TAG, mNetEvent.toString())
     }
 
     override fun callFailed(call: Call?, ioe: IOException) {
         super.callFailed(call, ioe)
         mNetEvent.callEndTime = System.currentTimeMillis()
         mNetEvent.errorReason = ioe.message
-        LogUtils.d(TAG, mNetEvent.toString())
+        if (LogUtils.isLoggable()) LogUtils.d(TAG, mNetEvent.toString())
     }
 }

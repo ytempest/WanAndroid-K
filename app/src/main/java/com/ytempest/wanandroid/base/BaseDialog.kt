@@ -55,7 +55,7 @@ open class BaseDialog<VB : ViewBinding>(
                 super.show()
             }
         } catch (e: Throwable) {
-            LogUtils.d(TAG, "show: e=$e")
+            if (LogUtils.isLoggable()) LogUtils.d(TAG, "show: e=$e")
         }
     }
 
@@ -65,7 +65,7 @@ open class BaseDialog<VB : ViewBinding>(
                 super.dismiss()
             }
         } catch (e: Throwable) {
-            LogUtils.d(TAG, "dismiss: e=$e")
+            if (LogUtils.isLoggable()) LogUtils.d(TAG, "dismiss: e=$e")
         }
     }
 }

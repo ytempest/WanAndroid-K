@@ -26,6 +26,6 @@ public class SuccessState extends AbsDownloadState {
 
     @Override
     protected void onClickAction() {
-        LogUtils.d(TAG, "onClickAction: ");
+        if (LogUtils.isLoggable()) LogUtils.d(TAG, "onClickAction: ");
     }
 }
