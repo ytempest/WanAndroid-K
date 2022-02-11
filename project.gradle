@@ -60,6 +60,8 @@ buildscript {
             // 用户登录用到的cookie认证
             "persistent_cookie"     : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
             "varietytablayout"      : 'com.ytempest:varietytablayout:1.1',
+
+            "multidex"              : "androidx.multidex:multidex:2.0.1"
     ]
 
     ext.annotationProcessorDeps = [
