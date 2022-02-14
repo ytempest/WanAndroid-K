@@ -5,8 +5,8 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.ytempest.tool.helper.ExpandFragHelper
 import com.ytempest.wanandroid.R
-import com.ytempest.wanandroid.base.activity.MVVMActivity
-import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.framework.base.activity.MVVMActivity
+import com.ytempest.framework.base.createViewModel
 import com.ytempest.wanandroid.databinding.ActivityMainBinding
 
 /**

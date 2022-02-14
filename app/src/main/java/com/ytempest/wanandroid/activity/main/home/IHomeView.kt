@@ -1,6 +1,6 @@
 package com.ytempest.wanandroid.activity.main.home
 
-import com.ytempest.wanandroid.base.view.IView
+import com.ytempest.framework.base.view.IView
 import com.ytempest.wanandroid.http.bean.BannerBean
 import com.ytempest.wanandroid.http.bean.HomeArticleBean
 

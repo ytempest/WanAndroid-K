@@ -37,8 +37,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     viewBinding {
@@ -54,7 +54,6 @@ repositories {
     flatDir {
         dirs 'libs'
     }
-    mavenCentral()
 }
 
 dependencies {
@@ -66,16 +65,5 @@ dependencies {
     implementationDeps.each { k, v -> implementation v }
     annotationProcessorDeps.each { k, v -> kapt v }
 
-    // tools
-    implementation(name: 'tool-v1.0-37-g8a47b58-2020-12-21_16-09', ext: 'aar')
-    // https://developer.android.com/jetpack/androidx/releases/core?hl=zh-cn
-    implementation "androidx.core:core-ktx:1.5.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0"
+    implementation project(path: ':framework')
 }

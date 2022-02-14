@@ -29,7 +29,6 @@ buildscript {
     ]
 
     ext.implementationDeps = [
-            "appcompat"             : "androidx.appcompat:appcompat:${depsVersions.appcompat}",
 
             // arch
             "runtime"               : "androidx.lifecycle:lifecycle-runtime:${depsVersions.arch}",
@@ -41,10 +40,6 @@ buildscript {
             // butterknife
             "butterknife"           : "com.jakewharton:butterknife:${depsVersions.butterknife}",
 
-            "gson"                  : "com.google.code.gson:gson:2.8.6",
-            "okhttp"                : "com.squareup.okhttp3:okhttp:${depsVersions.okhttp}",
-            "okhttp-interceptor"    : "com.squareup.okhttp3:logging-interceptor:${depsVersions.okhttp}",
-
             // rxjava
             "rxjava"                : "io.reactivex.rxjava2:rxjava:${depsVersions.rxjava}",
             "rxandroid"             : "io.reactivex.rxjava2:rxandroid:${depsVersions.rxjava}",
@@ -55,7 +50,6 @@ buildscript {
             "retrofit-gson"         : "com.squareup.retrofit2:converter-gson:${depsVersions.retrofit}",
 
             "greenrobot"            : "org.greenrobot:greendao:3.2.2",
-            "glide"                 : "com.github.bumptech.glide:glide:${depsVersions.glide}",
             "banner"                : "com.ytempest:banner:${depsVersions.banner}",
             // 用户登录用到的cookie认证
             "persistent_cookie"     : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
@@ -69,5 +63,26 @@ buildscript {
             "butterknife-compiler": "com.jakewharton:butterknife-compiler:${depsVersions.butterknife}",
 
             "glide"               : "com.github.bumptech.glide:compiler:${depsVersions.glide}",
+    ]
+
+    ext.frameworkApiDeps = [
+            "appcompat"         : "androidx.appcompat:appcompat:${depsVersions.appcompat}",
+
+            "gson"              : "com.google.code.gson:gson:2.8.6",
+            "okhttp"            : "com.squareup.okhttp3:okhttp:${depsVersions.okhttp}",
+            "okhttp-interceptor": "com.squareup.okhttp3:logging-interceptor:${depsVersions.okhttp}",
+
+            "glide"             : "com.github.bumptech.glide:glide:${depsVersions.glide}",
+
+            // https://developer.android.com/jetpack/androidx/releases/core?hl=zh-cn
+            "core-ktx"          : "androidx.core:core-ktx:1.5.0",
+            "kotlin-stdlib"     : "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}",
+
+            "viewmodel-ktx"     : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0",
+            "extensions"        : "androidx.lifecycle:lifecycle-extensions:2.1.0",
+            "livedata-ktx"      : "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0",
+
+            "coroutines-core"   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0",
+            "coroutines-android": "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0",
     ]
 }

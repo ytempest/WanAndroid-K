@@ -5,7 +5,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ytempest.wanandroid.ext.ctx
+import com.ytempest.framework.ext.ctx
 import com.ytempest.tool.helper.ActivityLauncher
 import com.ytempest.tool.state.StateCtrl
 import com.ytempest.tool.util.NetUtils

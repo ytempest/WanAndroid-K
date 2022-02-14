@@ -19,15 +19,15 @@ import com.ytempest.tool.util.web.WebUtils
 import com.ytempest.tool.util.web.WebViewClientWrapper
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.login.LoginActivity
-import com.ytempest.wanandroid.base.activity.MVVMActivity
-import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.framework.base.activity.MVVMActivity
+import com.ytempest.framework.base.createViewModel
 import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.ActivityArticleDetailBinding
-import com.ytempest.wanandroid.ext.getStringSafe
+import com.ytempest.framework.ext.getStringSafe
 import com.ytempest.wanandroid.helper.ArticleDetailHelper
 import com.ytempest.wanandroid.http.bean.ArticleDetailBean
-import com.ytempest.wanandroid.utils.JSON
-import com.ytempest.wanandroid.utils.StatusBarUtil
+import com.ytempest.framework.utils.JSON
+import com.ytempest.framework.utils.StatusBarUtil
 import com.ytempest.wanandroid.utils.Utils
 import com.ytempest.wanandroid.widget.MaskLayout.SimpleMaskActionListener
 

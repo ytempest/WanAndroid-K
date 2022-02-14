@@ -2,7 +2,7 @@ package com.ytempest.wanandroid.http.bean
 
 import androidx.annotation.IntDef
 import com.ytempest.wanandroid.http.bean.NavigationListBean.Articles
-import com.ytempest.wanandroid.utils.JSON
+import com.ytempest.framework.utils.JSON
 
 /**
  * @author heqidu

@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ytempest.tool.util.LogUtils
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.main.project.content.list.ContentListAdapter
-import com.ytempest.wanandroid.base.createViewModel
-import com.ytempest.wanandroid.base.fragment.MVVMFragment
+import com.ytempest.framework.base.createViewModel
+import com.ytempest.framework.base.fragment.MVVMFragment
 import com.ytempest.wanandroid.base.load.Loader
 import com.ytempest.wanandroid.base.load.ViewType
 import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.FragProjectContentBinding
-import com.ytempest.wanandroid.ext.getBundle
+import com.ytempest.framework.ext.getBundle
 import com.ytempest.wanandroid.http.bean.ProjectClassifyBean
 import com.ytempest.wanandroid.http.bean.ProjectContentBean
-import com.ytempest.wanandroid.utils.JSON
+import com.ytempest.framework.utils.JSON
 import com.ytempest.wanandroid.utils.Utils
 import java.util.*
 

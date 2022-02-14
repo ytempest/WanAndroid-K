@@ -7,25 +7,6 @@
         <item name="colorAccent">@color/main_color</item>
     </style>
 
-    <style name="common_dialog">
-        <!-- 边框 -->
-        <item name="android:windowFrame">@null</item>
-        <!-- 是否浮现在activity之上 -->
-        <item name="android:windowIsFloating">true</item>
-        <!-- 模糊 -->
-        <item name="android:windowIsTranslucent">true</item>
-        <!-- 背景透明 -->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <!-- 弹出dialog后允许背景变暗 -->
-        <item name="android:backgroundDimEnabled">true</item>
-        <!-- 无标题 -->
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="common_dialog_transparent" parent="common_dialog">
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-
     <!-- 默认的灰色分界线 -->
     <style name="gray_line">
         <item name="android:layout_width">match_parent</item>

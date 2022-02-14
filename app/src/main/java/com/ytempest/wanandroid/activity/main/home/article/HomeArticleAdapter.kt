@@ -14,7 +14,7 @@ import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.article.ArticleDetailActivity
 import com.ytempest.wanandroid.activity.login.LoginActivity
 import com.ytempest.wanandroid.activity.main.home.HomeViewModel
-import com.ytempest.wanandroid.ext.ctx
+import com.ytempest.framework.ext.ctx
 import com.ytempest.wanandroid.http.bean.ArticleDetailBean
 import com.ytempest.wanandroid.http.bean.HomeArticleBean
 import com.ytempest.wanandroid.utils.DateFormat

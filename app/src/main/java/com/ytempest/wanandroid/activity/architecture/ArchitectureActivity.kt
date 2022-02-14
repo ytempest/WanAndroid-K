@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import com.ytempest.tool.helper.ActivityLauncher
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.architecture.content.ArchArticleFrag
-import com.ytempest.wanandroid.base.activity.MVVMActivity
-import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.framework.base.activity.MVVMActivity
+import com.ytempest.framework.base.createViewModel
 import com.ytempest.wanandroid.databinding.ActivityArchitectureBinding
-import com.ytempest.wanandroid.ext.getStringSafe
+import com.ytempest.framework.ext.getStringSafe
 import com.ytempest.wanandroid.http.bean.KnowledgeArchitectureBean
 import com.ytempest.wanandroid.utils.CoreFragPagerAdapter
-import com.ytempest.wanandroid.utils.JSON
+import com.ytempest.framework.utils.JSON
 
 /**
  * @author heqidu

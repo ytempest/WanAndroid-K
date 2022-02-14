@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ytempest.wanandroid.R
-import com.ytempest.wanandroid.base.createViewModel
-import com.ytempest.wanandroid.base.fragment.MVVMFragment
+import com.ytempest.framework.base.createViewModel
+import com.ytempest.framework.base.fragment.MVVMFragment
 import com.ytempest.wanandroid.base.load.Loader
 import com.ytempest.wanandroid.base.load.ViewType
 import com.ytempest.wanandroid.base.vm.EntityObserver

@@ -1,8 +1,7 @@
 package com.ytempest.wanandroid.activity.main.navigation
 
 
-import com.ytempest.wanandroid.base.presenter.IPresenter
-import com.ytempest.wanandroid.base.view.IView
+import com.ytempest.framework.base.view.IView
 import com.ytempest.wanandroid.http.bean.NavigationListBean
 
 

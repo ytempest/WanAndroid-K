@@ -1,7 +1,7 @@
 package com.ytempest.wanandroid.http.observer
 
 import androidx.annotation.IntDef
-import com.ytempest.wanandroid.base.view.IView
+import com.ytempest.framework.base.view.IView
 import com.ytempest.wanandroid.http.ErrCode
 import com.ytempest.wanandroid.R
 

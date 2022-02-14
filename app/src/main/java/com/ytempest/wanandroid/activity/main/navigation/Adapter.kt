@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ytempest.wanandroid.activity.article.ArticleDetailActivity
-import com.ytempest.wanandroid.ext.ctx
+import com.ytempest.framework.ext.ctx
 import com.ytempest.tool.adapter.CoreRecyclerAdapter
 import com.ytempest.tool.adapter.CoreViewHolder
 import com.ytempest.wanandroid.R

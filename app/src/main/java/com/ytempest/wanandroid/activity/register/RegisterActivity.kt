@@ -3,8 +3,8 @@ package com.ytempest.wanandroid.activity.register
 import android.view.View
 import com.ytempest.tool.util.RegexUtils
 import com.ytempest.wanandroid.R
-import com.ytempest.wanandroid.base.activity.MVVMActivity
-import com.ytempest.wanandroid.base.createViewModel
+import com.ytempest.framework.base.activity.MVVMActivity
+import com.ytempest.framework.base.createViewModel
 import com.ytempest.wanandroid.base.vm.EntityObserver
 import com.ytempest.wanandroid.databinding.ActivityRegisterBinding
 import com.ytempest.wanandroid.http.ErrCode
@@ -12,7 +12,7 @@ import com.ytempest.wanandroid.http.bean.LoginBean
 import com.ytempest.wanandroid.listener.TextWatcherListener
 import com.ytempest.wanandroid.utils.CommonUtils
 import com.ytempest.wanandroid.utils.SpaceInputFilter
-import com.ytempest.wanandroid.utils.StatusBarUtil
+import com.ytempest.framework.utils.StatusBarUtil
 
 /**
  * @author heqidu

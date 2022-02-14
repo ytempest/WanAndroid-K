@@ -1,6 +1,6 @@
 package com.ytempest.wanandroid.activity.main
 
-import com.ytempest.wanandroid.base.view.IView
+import com.ytempest.framework.base.view.IView
 
 
 /**

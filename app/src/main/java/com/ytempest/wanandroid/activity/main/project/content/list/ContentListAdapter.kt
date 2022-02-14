@@ -13,8 +13,8 @@ import com.ytempest.tool.util.ToastUtils
 import com.ytempest.wanandroid.R
 import com.ytempest.wanandroid.activity.article.ArticleDetailActivity
 import com.ytempest.wanandroid.activity.main.project.content.ProjectContentViewModel
-import com.ytempest.wanandroid.ext.ctx
-import com.ytempest.wanandroid.ext.getString
+import com.ytempest.framework.ext.ctx
+import com.ytempest.framework.ext.getString
 import com.ytempest.wanandroid.http.bean.ArticleDetailBean
 import com.ytempest.wanandroid.http.bean.ProjectContentBean
 import com.ytempest.wanandroid.utils.DateFormat
