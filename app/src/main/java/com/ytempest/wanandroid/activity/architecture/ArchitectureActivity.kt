@@ -12,7 +12,6 @@ import com.ytempest.wanandroid.ext.getStringSafe
 import com.ytempest.wanandroid.http.bean.KnowledgeArchitectureBean
 import com.ytempest.wanandroid.utils.CoreFragPagerAdapter
 import com.ytempest.wanandroid.utils.JSON
-import kotlinx.android.synthetic.main.activity_architecture.*
 
 /**
  * @author heqidu
@@ -44,7 +43,7 @@ class ArchitectureActivity : LoaderActivity<ArchitecturePresenter, ActivityArchi
         mBean.children?.let {
             val tabs = ArrayList<String>()
             it.forEach { children -> tabs.add(children.name) }
-            binding.indicatorView.setupWithViewPager(content_view)
+            binding.indicatorView.setupWithViewPager(binding.contentView)
             binding.indicatorView.adapter = TabAdapter(tabs)
             binding.contentView.adapter = object : CoreFragPagerAdapter<KnowledgeArchitectureBean.Children>(
                     supportFragmentManager, it) {

@@ -3,9 +3,9 @@ buildscript {
             "versionCode": 1,
             "versionName": "1.0",
 
-            "compileSdk" : 29,
-            "minSdk"     : 19,
-            "targetSdk"  : 29,
+            "compileSdk" : 30,
+            "minSdk"     : 21,
+            "targetSdk"  : 30,
     ]
 
     ext.depsVersions = [
