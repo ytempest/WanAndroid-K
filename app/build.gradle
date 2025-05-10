@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt' // kapt 插件
 
 android {
@@ -68,7 +67,7 @@ dependencies {
 
     // tools
     implementation(name: 'tool-v1.0-37-g8a47b58-2020-12-21_16-09', ext: 'aar')
-    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.core:core-ktx:1.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
