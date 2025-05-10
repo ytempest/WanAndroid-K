@@ -4,7 +4,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'// kapt 插件
 
-    id 'dynamic-so'
+//    id 'dynamic-so'
+    id 'ytempest-asm'
 }
 
 android {

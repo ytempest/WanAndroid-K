@@ -1,0 +1,85 @@
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'kotlin'
+// gradle 7及以上用 maven-publish，maven插件已经弃用了
+apply plugin: 'maven-publish'
+
+// 插件名
+def pluginName = "ytempest-asm"
+// 插件入口类
+def pluginClass = "com.ytempest.asm.ASMPlugin"
+
+def pluginRepositories = rootDir.toString() + "/plugin"
+def pluginGroupId = 'com.ytempest.plugin'
+def pluginArtifactId = 'ytempest-asm'
+def pluginVersion = '1.0.0'
+
+apply plugin: 'java-gradle-plugin'
+gradlePlugin {
+    plugins {
+        release {
+            id = "$pluginName"
+            implementationClass = "$pluginClass"
+        }
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+dependencies {
+//    implementation gradleApi()
+    implementation localGroovy()
+
+    implementation 'com.android.tools.build:gradle:3.4.1'
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.3.72'
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+
+// apply plugin: 'maven-publish'
+// 执行 gradlew :pluginASM:publishReleasePublicationToMavenRepository 发布仓库
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId "$pluginGroupId"
+            artifactId "$pluginArtifactId"
+            version "$pluginVersion"
+            from components.java
+        }
+    }
+
+    repositories {
+        // 发布仓库到 $USER_HOME/.m2/repository 目录
+//        mavenLocal()
+        // 发布仓库到 当前模块的 repositories 目录
+        maven { url = "$pluginRepositories" }
+    }
+}
+
+// maven插件在gradle7以上已经弃用了
+// apply plugin: 'maven'
+// 执行./gradlew :pluginASM:uploadArchives 上传到本地Maven
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            //本地Maven
+//            pom.groupId = "$pluginGroupId"
+//            pom.artifactId = "$pluginArtifactId"
+//            pom.version = "$pluginVersion"
+//            repository(url: uri("$pluginRepositories"))
+//        }
+//    }
+//}
