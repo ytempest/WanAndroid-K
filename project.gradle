@@ -16,7 +16,6 @@ buildscript {
             "retrofit"   : "2.4.0",
             "rxjava"     : "2.0.2",
             "okhttp"     : "3.9.0",
-            "banner"     : "1.0",
             "glide"      : "4.5.0",
     ]
 
@@ -62,10 +61,10 @@ buildscript {
 
             "greenrobot"            : "org.greenrobot:greendao:3.2.2",
             "glide"                 : "com.github.bumptech.glide:glide:${depsVersions.glide}",
-            "banner"                : "com.ytempest:banner:${depsVersions.banner}",
+//            "banner"                : "com.ytempest:banner:1.0",
             // 用户登录用到的cookie认证
             "persistent_cookie"     : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
-            "varietytablayout"      : 'com.ytempest:varietytablayout:1.1',
+//            "varietytablayout"      : 'com.ytempest:varietytablayout:1.1',
     ]
 
     ext.annotationProcessorDeps = [
