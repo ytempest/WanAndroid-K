@@ -1,7 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt' // kapt 插件
+plugins {
+    id 'com.android.application'
+    id 'org.greenrobot.greendao'
+    id 'kotlin-android'
+    id 'kotlin-kapt'// kapt 插件
+
+    id 'dynamic-so'
+}
 
 android {
     compileSdkVersion versions.compileSdk
@@ -43,21 +47,22 @@ android {
     viewBinding {
         enabled = true
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['jni']
+            aidl.srcDirs = ['src']
+        }
+    }
 }
 
 greendao {
     schemaVersion 1 //当前数据库版本
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-    mavenCentral()
-}
-
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(include: ['*.aar'], dir: 'aar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     testImplementationDeps.each { k, v -> testImplementation v }
     androidTestImplementationDeps.each { k, v -> androidTestImplementation v }
@@ -65,8 +70,6 @@ dependencies {
     implementationDeps.each { k, v -> implementation v }
     annotationProcessorDeps.each { k, v -> kapt v }
 
-    // tools
-    implementation(name: 'tool-v1.0-37-g8a47b58-2020-12-21_16-09', ext: 'aar')
     implementation "androidx.core:core-ktx:1.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

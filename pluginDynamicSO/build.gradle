@@ -1,0 +1,102 @@
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'kotlin'
+// gradle 7及以上用 maven-publish，maven插件已经弃用了
+apply plugin: 'maven-publish'
+
+// 插件名
+def pluginName = "dynamic-so"
+// 插件入口类
+def pluginClass = "com.ytempest.dynamic_so.DynamicPlugin"
+
+def pluginRepositories = rootDir.toString() + "/plugin"
+def pluginGroupId = 'com.ytempest.plugin'
+def pluginArtifactId = 'dynamic-so'
+def pluginVersion = '1.0.0'
+
+apply plugin: 'java-gradle-plugin'
+gradlePlugin {
+    plugins {
+        release {
+            id = "$pluginName"
+            implementationClass = "$pluginClass"
+        }
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+//    implementation gradleApi()
+    implementation localGroovy()
+
+    implementation 'com.android.tools.build:gradle:3.4.1'
+    implementation 'com.google.guava:guava:27.0.1-android'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.3.72'
+//    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: '1.3.72'
+
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.3.72'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'
+
+    implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.3.0'
+    implementation group: 'com.squareup.retrofit2', name: 'adapter-rxjava2', version: '2.3.0'
+    implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.3.0'
+
+    implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.0.1'
+    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.0.1'
+
+    implementation group: 'org.json', name: 'org.json', version: 'chargebee-1.0'
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+
+// apply plugin: 'maven-publish'
+// 执行 gradlew :pluginDynamicSO:publishReleasePublicationToMavenRepository 发布仓库
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId "$pluginGroupId"
+            artifactId "$pluginArtifactId"
+            version "$pluginVersion"
+            from components.java
+        }
+    }
+
+    repositories {
+        // 发布仓库到 $USER_HOME/.m2/repository 目录
+//        mavenLocal()
+        // 发布仓库到 当前模块的 repositories 目录
+        maven { url = "$pluginRepositories" }
+    }
+}
+
+// maven插件在gradle7以上已经弃用了
+// apply plugin: 'maven'
+// 执行./gradlew :pluginDynamicSO:uploadArchives 上传到本地Maven
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            //本地Maven
+//            pom.groupId = "$pluginGroupId"
+//            pom.artifactId = "$pluginArtifactId"
+//            pom.version = "$pluginVersion"
+//            repository(url: uri("$pluginRepositories"))
+//        }
+//    }
+//}

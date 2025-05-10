@@ -1,0 +1,14 @@
+{
+  "armeabi": [
+    "libshine.so",
+    "libx264.so"
+  ],
+  "arm64-v8a": [
+    "libshine.so",
+    "libx264.so"
+  ],
+  "x86": [
+    "libshine.so",
+    "libx264.so"
+  ]
+}
