@@ -1,3 +1,4 @@
 rootProject.name = "WanAndroid-K"
 include ':app'
 include ':framework'
+include ':pluginDynamicSO'

@@ -1,7 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt' // kapt 插件
+plugins {
+    id 'com.android.application'
+    id 'org.greenrobot.greendao'
+    id 'kotlin-android'
+    id 'kotlin-kapt'// kapt 插件
+
+//    id 'dynamic-so'
+}
 
 android {
     compileSdkVersion versions.compileSdk
@@ -44,6 +48,13 @@ android {
     viewBinding {
         enabled = true
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['jni']
+            aidl.srcDirs = ['src']
+        }
+    }
 }
 
 greendao {
@@ -54,10 +65,12 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    mavenCentral()
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(include: ['*.aar'], dir: 'aar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     testImplementationDeps.each { k, v -> testImplementation v }
     androidTestImplementationDeps.each { k, v -> androidTestImplementation v }

@@ -37,8 +37,7 @@ dependencies {
     testImplementationDeps.each { k, v -> testImplementation v }
     androidTestImplementationDeps.each { k, v -> androidTestImplementation v }
 
+    api fileTree(include: ['*.aar'], dir: 'aar')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     frameworkApiDeps.each { k, v -> api v }
-
-    // tools，需要在根项目build.gradle中allprojects配置flatDir路径
-    api(name: 'tool-v1.0-37-g8a47b58-2020-12-21_16-09', ext: 'aar')
 }
