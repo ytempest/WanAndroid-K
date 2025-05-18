@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'// kapt 插件
 
 //    id 'dynamic-so'
+    id 'ytempest-asm'
 }
 
 android {
@@ -59,13 +60,6 @@ android {
 
 greendao {
     schemaVersion 1 //当前数据库版本
-}
-
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-    mavenCentral()
 }
 
 dependencies {

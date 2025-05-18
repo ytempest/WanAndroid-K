@@ -1,1 +1,1 @@
-gradlew :pluginDynamicSO:publishReleasePublicationToMavenRepository
+gradlew :pluginDynamicSO:publishReleasePublicationToMavenRepository :pluginASM:publishReleasePublicationToMavenRepository
