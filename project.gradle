@@ -16,6 +16,7 @@ buildscript {
             "rxjava"     : "2.0.2",
             "okhttp"     : "3.9.0",
             "glide"      : "4.5.0",
+            "coroutines"  : "1.6.4",
     ]
 
     ext.testImplementationDeps = [
@@ -81,7 +82,7 @@ buildscript {
             "extensions"        : "androidx.lifecycle:lifecycle-extensions:2.1.0",
             "livedata-ktx"      : "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0",
 
-            "coroutines-core"   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0",
-            "coroutines-android": "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0",
+            "coroutines-core"   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${depsVersions.coroutines}",
+            "coroutines-android": "org.jetbrains.kotlinx:kotlinx-coroutines-android:${depsVersions.coroutines}",
     ]
 }

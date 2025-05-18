@@ -7,6 +7,15 @@
         <item name="colorAccent">@color/main_color</item>
     </style>
 
+
+    <style name="common_activity_transparent" parent="@style/AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
+
     <!-- 默认的灰色分界线 -->
     <style name="gray_line">
         <item name="android:layout_width">match_parent</item>
