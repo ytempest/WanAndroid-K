@@ -91,7 +91,7 @@ public class LogTransform extends Transform {
                 if (isClassFile(fileName)) {
                     if (isValidClassFile(fileName)) {
                         FileUtils.touch(destFile);
-                        weave(file.getAbsolutePath(), destFile.getAbsolutePath());
+                        weave(file, destFile);
                     } else {
                         FileUtils.copyFile(file, destFile);
                     }
@@ -101,14 +101,15 @@ public class LogTransform extends Transform {
     }
 
 
-    private static void weave(String inputPath, String outputPath) {
+    private static void weave(File srcFile, File destFile) {
         try {
-            FileInputStream is = new FileInputStream(inputPath);
+            FileInputStream is = new FileInputStream(srcFile);
             ClassReader cr = new ClassReader(is);
             ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-            LogClassVisitor adapter = new LogClassVisitor(cw);
+            // srcFile.getName()获取示例：PreferencesName$Companion.class
+            ClassVisitorProxy adapter = new ClassVisitorProxy(cw, srcFile.getName());
             cr.accept(adapter, ClassReader.EXPAND_FRAMES);
-            FileOutputStream fos = new FileOutputStream(outputPath);
+            FileOutputStream fos = new FileOutputStream(destFile);
             fos.write(cw.toByteArray());
             fos.close();
         } catch (IOException e) {
@@ -126,7 +127,7 @@ public class LogTransform extends Transform {
     static boolean isValidClassFile(String name) {
         return (name != null
                 && name.endsWith(".class")
-                && !name.startsWith("R\\$")
+                && !name.startsWith("R$")
                 && !"R.class".equals(name)
                 && !"BuildConfig.class".equals(name));
     }
