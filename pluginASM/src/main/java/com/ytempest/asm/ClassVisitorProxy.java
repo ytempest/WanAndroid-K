@@ -23,11 +23,15 @@ public class ClassVisitorProxy extends ClassVisitor {
 
     public ClassVisitorProxy(ClassWriter writer, String className) {
         super(Opcodes.ASM6, writer);
-        mClassVisitors.add(new LogClassVisitor());
-        mClassVisitors.add(new FieldShrinkClassVisitor(className));
+        assembleClassVisitors(className);
         for (IClassVisitor visitor : mClassVisitors) {
             visitor.attach(this);
         }
+    }
+
+    private void assembleClassVisitors(String className) {
+//        mClassVisitors.add(new LogClassVisitor());
+        mClassVisitors.add(new FieldShrinkClassVisitor(className));
     }
 
     public int getApi() {

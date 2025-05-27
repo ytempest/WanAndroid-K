@@ -43,7 +43,7 @@ public class LogClassVisitor extends BaseClassVisitor {
                 return;
             }
 
-            System.out.println(TAG + " onMethodEnter mName=" + mName + "  mDesc=" + mDesc);
+            LogUtils.d(TAG + " onMethodEnter mName=" + mName + "  mDesc=" + mDesc);
 
             //方法执行之前打印
             mv.visitLdcInsn("ytempest-method-log");

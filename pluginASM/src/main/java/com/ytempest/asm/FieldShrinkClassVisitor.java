@@ -13,6 +13,7 @@ class FieldShrinkClassVisitor extends BaseClassVisitor {
     private static final String TAG = "FieldShrinkClassVisitor";
     private static final ArrayList<Integer> deleteOpcodesList = new ArrayList<>();
     private static final ArrayList<String> deleteTypeList = new ArrayList<>();
+    private static final ArrayList<String> skipFieldList = new ArrayList<>();
 
     static {
         deleteOpcodesList.add(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_FINAL);
@@ -29,6 +30,9 @@ class FieldShrinkClassVisitor extends BaseClassVisitor {
         deleteTypeList.add("J");
         deleteTypeList.add("D");
         deleteTypeList.add("Ljava/lang/String;");
+
+        // 序列化字段不用移除
+        skipFieldList.add("serialVersionUID");
     }
 
     private final String mClassName;
@@ -40,8 +44,12 @@ class FieldShrinkClassVisitor extends BaseClassVisitor {
 
     @Override
     public boolean visitFieldBefore(int access, String name, String desc, String signature, Object value) {
-        if (deleteOpcodesList.contains(access) && deleteTypeList.contains(desc) && value != null) {
-            System.out.println(TAG + " visitField className=" + mClassName + "  fieldName=" + name);
+        if (!skipFieldList.contains(name) // 部分字段不能移除
+                && deleteOpcodesList.contains(access)
+                && deleteTypeList.contains(desc)
+                && value != null // 表明该字段是在定义时赋予了值
+        ) {
+            LogUtils.d(TAG + " visitField className=" + mClassName + "  fieldName=" + name);
             return true;
         }
         return super.visitFieldBefore(access, name, desc, signature, value);

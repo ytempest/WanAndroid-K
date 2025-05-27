@@ -12,7 +12,7 @@ class ASMPlugin implements Plugin<Project> {
     @Override
     public void apply(Project p) {
         AppExtension appExtension = p.getExtensions().getByType(AppExtension.class);
-        appExtension.registerTransform(new LogTransform(p));
+        appExtension.registerTransform(new TransformProxy(p));
     }
 }
 
