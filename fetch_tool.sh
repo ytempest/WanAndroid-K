@@ -11,6 +11,7 @@ function printHelp() {
     echo "    -p               specify tool project path"
 }
 
+
 function genTimestamp(){
     date +"%Y-%m-%d_%H-%M"
 }
